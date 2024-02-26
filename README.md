@@ -9,6 +9,10 @@ your passphrase. (Or use gpg to encrypt the file, still trying to decide.)
 
 Adding a UI with a count-down timer because that's fun.
 
+## Status
+
+[![Makefile CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)](https://github.com/wolpert/simple_otp/actions/rust/makefile.yml)
+
 # Install GTK3
 
 ## Ubunto
