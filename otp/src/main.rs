@@ -13,7 +13,7 @@ fn main() {
     let time = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs();
 
     let mut secret = Secret::Encoded(args[1].to_string()).to_bytes().unwrap();
-    if (secret.len()<16) {
+    if secret.len()<16 {
         secret.resize(16, 0);
     }
     println!("length: {}", secret.len());

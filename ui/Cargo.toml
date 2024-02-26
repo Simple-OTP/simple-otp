@@ -1,9 +1,9 @@
 [package]
-name = "otp"
+name = "ui"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-totp-rs = "5.5.1"
+druid = "0.8.3"
