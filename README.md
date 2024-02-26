@@ -11,8 +11,7 @@ Adding a UI with a count-down timer because that's fun.
 
 ## Status
 
-[![Makefile CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)](https://github.com/wolpert/simple_otp/actions/[![Makefile CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)](https://github.com/wolpert/simple_otp/workflows/rust/rust.yml)
-/rust.yml)
+[![Makefile CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml)
 
 # Install GTK3
 
