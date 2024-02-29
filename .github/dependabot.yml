@@ -6,11 +6,11 @@
 version: 2
 updates:
   - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/otp" # Location of package manifests
+    directory: "/rust/otp" # Location of package manifests
     schedule:
       interval: "daily"
 
   - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/ui" # Location of package manifests
+    directory: "/rust/ui" # Location of package manifests
     schedule:
       interval: "daily"
