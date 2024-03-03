@@ -1,8 +1,8 @@
 use totp_rs::{Algorithm, Secret, TOTP};
 
 pub struct OTP {
-    code: String,
-    ttl: u64
+    pub code: String,
+    pub ttl: u64
 }
 
 impl OTP {
@@ -19,6 +19,12 @@ impl OTP {
             }
             Err(_) => Err("Error creating TOTP"),
         }
+    }
+    pub fn code(&self) -> &str {
+        &self.code
+    }
+    pub fn ttl(&self) -> u64 {
+        self.ttl
     }
 }
 
