@@ -42,7 +42,7 @@ fn build_root_widget() -> impl Widget<TOTPState> {
     let label = Label::new(|data: &TOTPState, _env: &Env| format!("OTP {}", data.token));
     // a textbox that modifies `name`.
     let textbox = TextBox::new()
-        .with_placeholder("Who are we greeting?")
+        .with_placeholder("One Time Code?")
         .fix_width(TEXT_BOX_WIDTH)
         .lens(TOTPState::token);
 

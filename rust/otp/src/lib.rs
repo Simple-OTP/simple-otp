@@ -1,5 +1,27 @@
 use totp_rs::{Algorithm, Secret, TOTP};
 
+pub struct OTP {
+    code: String,
+    ttl: u64
+}
+
+impl OTP {
+    pub fn new(secret: &str) -> Result<Self, &'static str> {
+        match totp_for(secret_to_vec(secret)?) {
+            Ok(totp) => {
+                match totp.generate_current() {
+                    Ok(token) => Ok(Self {
+                        code: token,
+                        ttl: totp.ttl().unwrap(),
+                    }),
+                    Err(_) => Err("Error generating token"),
+                }
+            }
+            Err(_) => Err("Error creating TOTP"),
+        }
+    }
+}
+
 pub fn otp_for(secret: &str) -> Result<String, &'static str> {
     let secret = secret_to_vec(secret)?;
     totp(secret)
@@ -23,8 +45,7 @@ fn resize_secret(secret: Vec<u8>) -> Vec<u8> {
     secret
 }
 
-/// Generates a TOTP token from a secret that is in byte form.
-fn totp(secret: Vec<u8>) -> Result<String, &'static str> {
+fn totp_for(secret: Vec<u8>) -> Result<TOTP, &'static str> {
     match TOTP::new(
         Algorithm::SHA1,
         6,
@@ -32,6 +53,14 @@ fn totp(secret: Vec<u8>) -> Result<String, &'static str> {
         30,
         secret,
     ) {
+        Ok(totp) => Ok(totp),
+        Err(_) => Err("Error creating TOTP"),
+    }
+}
+
+/// Generates a TOTP token from a secret that is in byte form.
+fn totp(secret: Vec<u8>) -> Result<String, &'static str> {
+    match totp_for(secret) {
         Ok(totp) => {
             match totp.generate_current() {
                 Ok(token) => Ok(token),
