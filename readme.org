@@ -1,0 +1,44 @@
+* Simple OTP
+** Purpose
+
+Simple OTP is a free secure OTP generator that is usable across sites
+and devices.
+
+And... it's an excuse to learn flutter/dart
+
+** Description
+
+With the Authy desktop application going away, there is a need for a
+simple but secure OTP generator that is not tied to the company with
+the 2FA requirement, like google or Bitwarden. This was designed to be
+a minimalist project but with the ability to import/export.
+
+Uses flutter/dart so the project will work across all major devices.
+Starting with Linux/Android. 
+
+** Flow
+
+The application has a basic flow. Unlock your database, add/remove
+authentication secrets, and generate code for secrets you
+select. Codes are regenerated when the current one expires. Can add to
+the clipboard.
+
+There is no cloud save. You can export/import files. Some point in the
+future I may do a device/device communications to sync devices.
+
+Your authentication secrets are encrypted with AES/GCM using a 256-bit
+key derived from your password. 
+
+** UI
+*** Unlock Screen
+**** Use password to unlock
+**** Biometrics to unlock
+**** Pin to unlock
+*** Code Selector Screen
+**** Add Dialog Box
+**** Remove Dialog Box
+**** Lock button
+*** Preferences
+**** Add/remove biometrics
+**** Add/remove pin
+**** import/export (option: decrypted)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widgets/otpwidget.dart';
+import 'package:simple_otp/widgets/lock_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const OTPWidget(title: 'Simple OTP'),
+      home: const LockRoute(),
     );
   }
 }
