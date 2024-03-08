@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 import 'package:simple_otp/model/otp_sescret.dart';
 
-class OTPWidget extends StatefulWidget {
-  const OTPWidget({super.key, required this.secret});
+class OTPRoute extends StatefulWidget {
+  const OTPRoute({super.key, required this.secret});
 
   final OTPSecret secret;
 
   @override
-  State<OTPWidget> createState() => _OTPWidgetState();
+  State<OTPRoute> createState() => _OTPRouteState();
 }
 
-class _OTPWidgetState extends State<OTPWidget> {
+class _OTPRouteState extends State<OTPRoute> {
   OTPSecret get _secret => widget.secret;
   Timer? _timer;
   String _otp = "";
@@ -49,7 +49,12 @@ class _OTPWidgetState extends State<OTPWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text("OTP for ${widget.secret.issuer} / ${widget.secret.username}        "),
+        ),
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -66,6 +71,17 @@ class _OTPWidgetState extends State<OTPWidget> {
               ),
             ],
           ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).colorScheme.background,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(icon: const Icon(Icons.lock), onPressed: _lock, tooltip: "Lock",),
+              IconButton(onPressed: _generateCode, icon:  const Icon(Icons.refresh), tooltip: "Refresh",)
+            ],
+          ),
+        ),
         );
   }
 }
