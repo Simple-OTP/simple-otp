@@ -32,7 +32,22 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: DatabaseListView(),
+              child: ListView(
+                children: const <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.map),
+                    title: Text('Map'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.photo_album),
+                    title: Text('Album'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.phone),
+                    title: Text('Phone'),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               flex: 3,
@@ -45,31 +60,3 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
   }
 }
 
-class DatabaseListView extends StatefulWidget {
-  const DatabaseListView({super.key});
-
-  @override
-  State<DatabaseListView> createState() => _DatabaseListState();
-}
-
-class _DatabaseListState extends State<DatabaseListView> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: const <Widget>[
-        ListTile(
-          leading: Icon(Icons.map),
-          title: Text('Map'),
-        ),
-        ListTile(
-          leading: Icon(Icons.photo_album),
-          title: Text('Album'),
-        ),
-        ListTile(
-          leading: Icon(Icons.phone),
-          title: Text('Phone'),
-        ),
-      ],
-    );
-  }
-}
