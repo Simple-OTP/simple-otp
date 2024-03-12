@@ -16,6 +16,14 @@ class DatabaseRoute extends StatefulWidget {
 }
 
 class _DatabaseRouteState extends State<DatabaseRoute> {
+  final List<OTPSecret> _secrets = <OTPSecret>[
+    OTPSecret(
+        issuer: "google", username: "fred@dol", secret: OTP.randomSecret()),
+    OTPSecret(
+        issuer: "yahoo", username: "fred@dol", secret: OTP.randomSecret()),
+    OTPSecret(
+        issuer: "gargole", username: "fred@dol", secret: OTP.randomSecret()),
+  ];
   OTPSecret? _secret;
 
   void setSecret(OTPSecret secret) {
@@ -37,33 +45,25 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
         body: Row(
           children: <Widget>[
             Expanded(
-              flex: 2,
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                      leading: Icon(Icons.map),
-                      title: Text('Map'),
-                      onTap: () => setSecret(OTPSecret(
-                          issuer: "google",
-                          username: "fred@dol",
-                          secret: OTP.randomSecret()))),
-                  ListTile(
-                      leading: Icon(Icons.photo_album),
-                      title: Text('Album'),
-                      onTap: () => setSecret(OTPSecret(
-                          issuer: "google",
-                          username: "fred@dol",
-                          secret: OTP.randomSecret()))),
-                  ListTile(
-                      leading: Icon(Icons.phone),
-                      title: Text('Phone'),
-                      onTap: () => setSecret(OTPSecret(
-                          issuer: "google",
-                          username: "fred@dol",
-                          secret: OTP.randomSecret()))),
-                ],
-              ),
-            ),
+                flex: 2,
+                child: ListView.separated(
+                    padding: const EdgeInsets.all(20),
+                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                    itemCount: _secrets.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                          height: 60,
+                          child: Center(
+                            child: ListTile(
+                              tileColor: _secrets[index] == _secret
+                                  ? Theme.of(context).colorScheme.inversePrimary
+                                  : null,
+                              leading: const Icon(Icons.arrow_forward),
+                              title: Text("${_secrets[index].issuer}\n${_secrets[index].username}"),
+                              onTap: () => setSecret(_secrets[index]),
+                            ),
+                          ));
+                    })),
             Expanded(
               flex: 3,
               child: OTPWidget(secret: _secret),
