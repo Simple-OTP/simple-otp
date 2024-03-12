@@ -7,17 +7,17 @@ import 'package:simple_otp/model/otp_sescret.dart';
 class OTPWidget extends StatefulWidget {
   const OTPWidget({super.key, required this.secret});
 
-  final OTPSecret secret;
+  final OTPSecret? secret;
 
   @override
   State<OTPWidget> createState() => _OTPWidgetState();
 }
 
 class _OTPWidgetState extends State<OTPWidget> {
-  OTPSecret get _secret => widget.secret;
+  OTPSecret? get _secret => widget.secret;
   Timer? _timer;
   String _otp = "";
-  int _seconds = 0;
+  String _seconds = "";
 
   @override
   void initState() {
@@ -36,10 +36,13 @@ class _OTPWidgetState extends State<OTPWidget> {
 
   void _generateCode() {
     setState(() {
+      if (_secret == null) {
+        return;
+      }
       _otp = OTP.generateTOTPCodeString(
-          _secret.secret,
+          _secret!.secret,
           DateTime.now().millisecondsSinceEpoch);
-      _seconds = OTP.remainingSeconds();
+      _seconds = OTP.remainingSeconds().toString();
     });
   }
 
@@ -61,7 +64,7 @@ class _OTPWidgetState extends State<OTPWidget> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               Text(
-                '$_seconds',
+                _seconds,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ],

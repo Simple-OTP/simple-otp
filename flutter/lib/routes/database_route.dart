@@ -16,11 +16,17 @@ class DatabaseRoute extends StatefulWidget {
 }
 
 class _DatabaseRouteState extends State<DatabaseRoute> {
+  OTPSecret? _secret;
+
+  void setSecret(OTPSecret secret) {
+    setState(() {
+      _secret = secret;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const String appTitle = 'Simple OTP';
-    final OTPSecret secret = OTPSecret(
-        issuer: "google", username: "fred@dol", secret: OTP.randomSecret());
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
@@ -33,25 +39,34 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
             Expanded(
               flex: 2,
               child: ListView(
-                children: const <Widget>[
+                children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.map),
-                    title: Text('Map'),
-                  ),
+                      leading: Icon(Icons.map),
+                      title: Text('Map'),
+                      onTap: () => setSecret(OTPSecret(
+                          issuer: "google",
+                          username: "fred@dol",
+                          secret: OTP.randomSecret()))),
                   ListTile(
-                    leading: Icon(Icons.photo_album),
-                    title: Text('Album'),
-                  ),
+                      leading: Icon(Icons.photo_album),
+                      title: Text('Album'),
+                      onTap: () => setSecret(OTPSecret(
+                          issuer: "google",
+                          username: "fred@dol",
+                          secret: OTP.randomSecret()))),
                   ListTile(
-                    leading: Icon(Icons.phone),
-                    title: Text('Phone'),
-                  ),
+                      leading: Icon(Icons.phone),
+                      title: Text('Phone'),
+                      onTap: () => setSecret(OTPSecret(
+                          issuer: "google",
+                          username: "fred@dol",
+                          secret: OTP.randomSecret()))),
                 ],
               ),
             ),
             Expanded(
               flex: 3,
-              child: OTPWidget(secret: secret),
+              child: OTPWidget(secret: _secret),
             ),
           ],
         ),
@@ -59,4 +74,3 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
     );
   }
 }
-
