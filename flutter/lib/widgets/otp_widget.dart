@@ -18,6 +18,8 @@ class _OTPWidgetState extends State<OTPWidget> {
   Timer? _timer;
   String _otp = "";
   String _seconds = "";
+  String _provider = "";
+  Icon? _icon;
 
   @override
   void initState() {
@@ -39,36 +41,39 @@ class _OTPWidgetState extends State<OTPWidget> {
       if (_secret == null) {
         return;
       }
+      _provider = "${_secret!.issuer}/${_secret!.username}";
       _otp = OTP.generateTOTPCodeString(
-          _secret!.secret,
-          DateTime.now().millisecondsSinceEpoch);
+          _secret!.secret, DateTime.now().millisecondsSinceEpoch);
       _seconds = OTP.remainingSeconds().toString();
+      _icon = const Icon(Icons.copy);
     });
-  }
-
-  void _lock() {
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(_provider, style: Theme.of(context).textTheme.headlineMedium),
+          Row(
             children: <Widget>[
-              const Text(
-                'OTP Code:',
-              ),
               Text(
                 _otp,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              Text(
-                _seconds,
-                style: Theme.of(context).textTheme.headlineMedium,
+              Icon(
+                _icon?.icon,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),
-        );
+          Text(
+            _seconds,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ],
+      ),
+    );
   }
 }
