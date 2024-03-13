@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:otp/otp.dart';
 import 'package:simple_otp/model/otp_sescret.dart';
 
@@ -57,15 +58,20 @@ class _OTPWidgetState extends State<OTPWidget> {
         children: <Widget>[
           Text(_provider, style: Theme.of(context).textTheme.headlineMedium),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 _otp,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              Icon(
-                _icon?.icon,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              IconButton(
+                  icon: Icon(
+                    _icon?.icon,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: _otp));
+                  }),
             ],
           ),
           Text(
