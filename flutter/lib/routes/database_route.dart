@@ -66,7 +66,7 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
                     })),
             Expanded(
               flex: 3,
-              child: OTPWidget(secret: _secret),
+              child: _secret != null ? OTPWidget(secret: _secret!) : const Icon(Icons.block),
             ),
           ],
         ),
