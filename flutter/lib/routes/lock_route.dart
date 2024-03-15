@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:simple_otp/routes/database_route.dart';
 
-
 class LockRoute extends StatelessWidget {
   const LockRoute({super.key});
 
   void _unlockDatabase(BuildContext context) {
     Navigator.push(
-      context,
-      //MaterialPageRoute(builder: (context) => OTPWidget(secret: secret),
-      MaterialPageRoute(builder: (context) => const DatabaseRoute(),
-    ));
+        context,
+        //MaterialPageRoute(builder: (context) => OTPWidget(secret: secret),
+        MaterialPageRoute(
+          builder: (context) => const DatabaseRoute(),
+        ));
   }
 
   @override
@@ -23,7 +23,9 @@ class LockRoute extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           child: const Text('Unlock Database'),
-          onPressed: () {_unlockDatabase(context);},
+          onPressed: () {
+            _unlockDatabase(context);
+          },
         ),
       ),
     );

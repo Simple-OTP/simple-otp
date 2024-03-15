@@ -33,6 +33,7 @@ dependencies:
   cryptography_flutter: ^2.3.2
   flutter:
     sdk: flutter
+  path_provider: ^2.0.2
   provider: ^6.0.1
 
 
