@@ -1,4 +1,4 @@
-use druid::widget::{Button, Align, Flex, Label, TextBox};
+use druid::widget::{Align, Flex, Label, TextBox};
 use druid::{AppLauncher, LocalizedString, Widget, WidgetExt, WindowDesc, Data, Env, Lens};
 use std::env;
 
