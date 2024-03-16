@@ -11,20 +11,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_otp/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Opening an empty database', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
     // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Unlock Database'), findsOneWidget);
 
     // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byIcon(Icons.block), findsNothing);
+    expect(find.byType(ElevatedButton), findsOneWidget);
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump();// handle the route push
+    expect(find.text('Unlock Database'), findsOneWidget);
+    expect(find.byIcon(Icons.block), findsNothing);
+    await tester.pump();// handle the new route
+    expect(find.byIcon(Icons.block), findsOneWidget);
   });
 }
