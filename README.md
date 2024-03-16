@@ -10,8 +10,8 @@ your passphrase. (Or use gpg to encrypt the file, still trying to decide.)
 Adding a UI with a count-down timer because that's fun.
 
 ## Status
-* [![Rust CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml)
-* [![Flutter CI](https://github.com/wolpert/simple_otp/actions/workflows/flutter.yml/badge.svg)](https://github.com/wolpert/simple_otp/actions/workflows/flutter.yml)
+* ![Rust CI](https://github.com/wolpert/simple_otp/actions/workflows/rust.yml/badge.svg)
+* ![Flutter CI](https://github.com/wolpert/simple_otp/actions/workflows/flutter.yml/badge.svg)
 
 # Install GTK3
 
