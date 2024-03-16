@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
@@ -18,11 +19,19 @@ class DatabaseRoute extends StatefulWidget {
 class _DatabaseRouteState extends State<DatabaseRoute> {
   List<OTPSecret> _secrets = <OTPSecret>[];
   OTPSecret? _secret;
+  var logger = Logger();
 
   @override
   void initState() {
     super.initState();
-    StorageManager().readDatabase().then((value) => loadSecrets(value));
+    StorageManager().readDatabase().then((value) => _loadSecrets(value));
+  }
+
+  void _loadSecrets(List<OTPSecret> value) {
+    logger.d("Loading secrets");
+    setState(() {
+      _secrets = value;
+    });
   }
 
   void setSecret(OTPSecret secret) {
@@ -75,11 +84,5 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
         ),
       ),
     );
-  }
-
-  loadSecrets(List<OTPSecret> value) {
-    setState(() {
-      _secrets = value;
-    });
   }
 }

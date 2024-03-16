@@ -1,5 +1,6 @@
 import 'dart:core';
 
+/// The model that represents a OTP Secret.
 class OTPSecret implements Comparable<OTPSecret> {
   final String issuer;
   final String username;
@@ -19,7 +20,12 @@ class OTPSecret implements Comparable<OTPSecret> {
         'secret': secret,
       };
 
-  // sort by Name (asc)
+  @override
+  String toString() {
+    return 'OTPSecret{issuer: $issuer, username: $username}';
+  }
+
+  /// Sorts the list of OTPSecrets by issuer and username.
   @override
   int compareTo(OTPSecret other) {
     int result = issuer.compareTo(other.issuer);

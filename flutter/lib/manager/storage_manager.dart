@@ -2,10 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/model/otp_sescret.dart';
 
 class StorageManager {
+  static const fileName = "tokens.json";
+
+  var logger = Logger();
+
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
 
@@ -14,11 +19,13 @@ class StorageManager {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    print("Path: $path");
-    return File('$path/tokens.json');
+    final completePath = '$path/$fileName';
+    logger.d("Storage Path: $completePath");
+    return File(completePath);
   }
 
   Future<List<OTPSecret>> readDatabase() async {
+    logger.d("Reading Database");
     try {
       final file = await _localFile;
 
@@ -29,10 +36,11 @@ class StorageManager {
       final list =
           parsed.map<OTPSecret>((json) => OTPSecret.fromJson(json)).toList();
       list.sort();
+      logger.d("result: $list");
       return list;
     } catch (e) {
       // If encountering an error, return 0
-      print("Error: $e");
+      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
       return List.empty();
     }
   }

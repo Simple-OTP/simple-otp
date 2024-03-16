@@ -38,9 +38,9 @@ class _OTPWidgetState extends State<OTPWidget> {
 
   void _generateCode() {
     setState(() {
-      _provider = "${_secret!.issuer}/${_secret!.username}";
+      _provider = "${_secret.issuer}/${_secret.username}";
       _otp = OTP.generateTOTPCodeString(
-          _secret!.secret, DateTime.now().millisecondsSinceEpoch);
+          _secret.secret, DateTime.now().millisecondsSinceEpoch);
       _seconds = OTP.remainingSeconds().toString();
     });
   }
