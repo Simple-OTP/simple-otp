@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2ff916b-4cd1-4ea2-b4e6-0789c0c533d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/flutter.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/rust.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/rust.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rust/ui/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/rust/ui/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/flutter.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/flutter.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1709217699779</updated>
       <workItem from="1709217701286" duration="143000" />
-      <workItem from="1710602212333" duration="3204000" />
+      <workItem from="1710602212333" duration="3577000" />
     </task>
     <servers />
   </component>
