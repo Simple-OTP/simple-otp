@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
-import 'package:simple_otp/model/otp_sescret.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 
 class OTPRoute extends StatefulWidget {
   const OTPRoute({super.key, required this.secret});

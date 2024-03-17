@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_otp/model/otp_sescret.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 
 class OTPSecretProvider extends ChangeNotifier {
   OTPSecret? _secret;

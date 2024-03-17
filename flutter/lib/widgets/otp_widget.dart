@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:otp/otp.dart';
-import 'package:simple_otp/model/otp_sescret.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 
 class OTPWidget extends StatefulWidget {
   const OTPWidget({super.key, required this.secret});

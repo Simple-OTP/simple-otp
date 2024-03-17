@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:simple_otp/model/otp_sescret.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 
 class StorageManager {
   static const fileName = "tokens.json";
@@ -28,6 +28,10 @@ class StorageManager {
     logger.d("Reading Database");
     try {
       final file = await _localFile;
+      if (!file.existsSync()) {
+        logger.d("File does not exist");
+        return List.empty();
+      }
 
       // Read the file
       final contents = await file.readAsString();

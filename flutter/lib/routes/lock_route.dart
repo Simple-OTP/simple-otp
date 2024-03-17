@@ -7,7 +7,6 @@ class LockRoute extends StatelessWidget {
   void _unlockDatabase(BuildContext context) {
     Navigator.push(
         context,
-        //MaterialPageRoute(builder: (context) => OTPWidget(secret: secret),
         MaterialPageRoute(
           builder: (context) => const DatabaseRoute(),
         ));

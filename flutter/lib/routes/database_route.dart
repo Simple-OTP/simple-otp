@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
-import '../model/otp_sescret.dart';
+import '../model/otp_secret.dart';
 
 // This app view holds onto the database.
 // inside is two widgets, once is the database list itself,
@@ -50,6 +50,32 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
           title: const Text(appTitle),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAccount()));
+                },
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settings');
+                },
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.lock),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+            ),
+        ),
         body: Row(
           children: <Widget>[
             Expanded(
@@ -83,6 +109,55 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AddAccount extends SimpleDialog {
+  const AddAccount({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: const Text('Add Account'),
+      children: <Widget>[
+        const TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Issuer',
+          ),
+        ),
+        const TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Username',
+          ),
+        ),
+        const TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Secret',
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        ),
+
+      ],
     );
   }
 }
