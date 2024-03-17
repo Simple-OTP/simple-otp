@@ -1,4 +1,7 @@
 
+# Use this as a sanity check before committing your code.
+# Just run `make` and you're all good.
+
 all: rust_app flutter_app
 
 rust_app:

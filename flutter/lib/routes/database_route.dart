@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:simple_otp/manager/storage_manager.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
-import '../model/otp_secret.dart';
+import '../provider/secrets_list.dart';
 
 // This app view holds onto the database.
 // inside is two widgets, once is the database list itself,
@@ -17,28 +18,7 @@ class DatabaseRoute extends StatefulWidget {
 }
 
 class _DatabaseRouteState extends State<DatabaseRoute> {
-  List<OTPSecret> _secrets = <OTPSecret>[];
-  OTPSecret? _secret;
   var logger = Logger();
-
-  @override
-  void initState() {
-    super.initState();
-    StorageManager().readDatabase().then((value) => _loadSecrets(value));
-  }
-
-  void _loadSecrets(List<OTPSecret> value) {
-    logger.d("Loading secrets");
-    setState(() {
-      _secrets = value;
-    });
-  }
-
-  void setSecret(OTPSecret secret) {
-    setState(() {
-      _secret = secret;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +36,10 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAccount()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddAccount()));
                 },
               ),
               const Spacer(),
@@ -74,42 +57,57 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
                 },
               ),
             ],
-            ),
+          ),
         ),
         body: Row(
           children: <Widget>[
             Expanded(
-                flex: 2,
-                child: ListView.separated(
-                    padding: const EdgeInsets.all(20),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                    itemCount: _secrets.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                          height: 60,
-                          child: Center(
-                            child: ListTile(
-                              tileColor: _secrets[index] == _secret
-                                  ? Theme.of(context).colorScheme.inversePrimary
-                                  : null,
-                              leading: const Icon(Icons.arrow_forward),
-                              title: Text(
-                                  "${_secrets[index].issuer}\n${_secrets[index].username}"),
-                              onTap: () => setSecret(_secrets[index]),
-                            ),
-                          ));
-                    })),
-            Expanded(
+              flex: 2,
+              child: DatabaseView(),
+            ),
+            const Expanded(
               flex: 3,
-              child: _secret != null
-                  ? OTPWidget(secret: _secret!)
-                  : const Icon(Icons.block),
+              child: OTPWidget(),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class DatabaseView extends ListView {
+  DatabaseView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SecretList>(builder: (context, secretList, child) {
+      var otpSecrets = secretList.otpSecrets;
+      var activeSecret =
+          Provider.of<ActiveOTPSecret>(context, listen: false).otpSecret;
+      return ListView.separated(
+          padding: const EdgeInsets.all(20),
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemCount: otpSecrets.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+                height: 60,
+                child: Center(
+                  child: ListTile(
+                    tileColor: otpSecrets[index] == activeSecret
+                        ? Theme.of(context).colorScheme.inversePrimary
+                        : null,
+                    leading: const Icon(Icons.arrow_forward),
+                    title: Text(
+                        "${otpSecrets[index].issuer}\n${otpSecrets[index].username}"),
+                    onTap: () =>
+                        Provider.of<ActiveOTPSecret>(context, listen: false)
+                            .otpSecret = otpSecrets[index],
+                  ),
+                ));
+          });
+    });
   }
 }
 
@@ -156,7 +154,6 @@ class AddAccount extends SimpleDialog {
             ),
           ],
         ),
-
       ],
     );
   }

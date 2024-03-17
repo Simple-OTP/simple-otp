@@ -3,30 +3,26 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:otp/otp.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
+import 'package:simple_otp/provider/otp_secret_provider.dart';
 
 class OTPWidget extends StatefulWidget {
-  const OTPWidget({super.key, required this.secret});
-
-  final OTPSecret secret;
+  const OTPWidget({super.key});
 
   @override
   State<OTPWidget> createState() => _OTPWidgetState();
 }
 
 class _OTPWidgetState extends State<OTPWidget> {
-  OTPSecret get _secret => widget.secret;
   Timer? _timer;
-  String _otp = "";
-  String _seconds = "";
-  String _provider = "";
 
   @override
   void initState() {
     super.initState();
-    _generateCode();
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      _generateCode();
+      setState(() {});
+      ();
     });
   }
 
@@ -36,42 +32,45 @@ class _OTPWidgetState extends State<OTPWidget> {
     super.dispose();
   }
 
-  void _generateCode() {
-    setState(() {
-      _provider = "${_secret.issuer}/${_secret.username}";
-      _otp = OTP.generateTOTPCodeString(
-          _secret.secret, DateTime.now().millisecondsSinceEpoch);
-      _seconds = OTP.remainingSeconds().toString();
-    });
+  Widget buildWithSecrete(BuildContext context, OTPSecret otpSecret) {
+    var otp = OTP.generateTOTPCodeString(
+        otpSecret.secret, DateTime.now().millisecondsSinceEpoch);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("${otpSecret.issuer}/${otpSecret.username}",
+            style: Theme.of(context).textTheme.headlineMedium),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              otp,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            IconButton(
+                icon: const Icon(Icons.copy),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: otp));
+                }),
+          ],
+        ),
+        Text(
+          OTP.remainingSeconds().toString(),
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(_provider, style: Theme.of(context).textTheme.headlineMedium),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                _otp,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              IconButton(
-                  icon: const Icon(Icons.copy),
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: _otp));
-                  }),
-            ],
-          ),
-          Text(
-            _seconds,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ],
-      ),
-    );
+    return Consumer<ActiveOTPSecret>(
+        builder: (context, ActiveOTPSecret activeSecret, child) {
+      return Center(
+        child: activeSecret.otpSecret != null
+            ? buildWithSecrete(context, activeSecret.otpSecret!)
+            : const Icon(Icons.block),
+      );
+    });
   }
 }

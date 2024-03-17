@@ -34,4 +34,15 @@ class OTPSecret implements Comparable<OTPSecret> {
     }
     return result;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OTPSecret &&
+          runtimeType == other.runtimeType &&
+          issuer == other.issuer &&
+          username == other.username;
+
+  @override
+  int get hashCode => issuer.hashCode ^ username.hashCode;
 }
