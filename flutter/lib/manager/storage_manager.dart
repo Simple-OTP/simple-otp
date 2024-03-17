@@ -12,7 +12,7 @@ class StorageManager {
   var logger = Logger();
 
   Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationSupportDirectory();
 
     return directory.path;
   }

@@ -13,7 +13,7 @@ import 'package:simple_otp/main.dart';
 void main() {
   testWidgets('Opening an empty database', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const OTPProviders());
 
     // Verify that our counter starts at 0.
     expect(find.text('Unlock Database'), findsOneWidget);

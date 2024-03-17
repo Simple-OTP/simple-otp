@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
@@ -83,31 +84,44 @@ class DatabaseView extends ListView {
   Widget build(BuildContext context) {
     return Consumer<SecretList>(builder: (context, secretList, child) {
       var otpSecrets = secretList.otpSecrets;
-      var activeSecret =
-          Provider.of<ActiveOTPSecret>(context, listen: false).otpSecret;
-      return ListView.separated(
-          padding: const EdgeInsets.all(20),
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemCount: otpSecrets.length,
-          itemBuilder: (BuildContext context, int index) {
-            return SizedBox(
-                height: 60,
-                child: Center(
-                  child: ListTile(
-                    tileColor: otpSecrets[index] == activeSecret
-                        ? Theme.of(context).colorScheme.inversePrimary
-                        : null,
-                    leading: const Icon(Icons.arrow_forward),
-                    title: Text(
-                        "${otpSecrets[index].issuer}\n${otpSecrets[index].username}"),
-                    onTap: () =>
-                        Provider.of<ActiveOTPSecret>(context, listen: false)
-                            .otpSecret = otpSecrets[index],
-                  ),
-                ));
-          });
+      return Consumer<ActiveOTPSecret>(
+          builder: (context, ActiveOTPSecret activeSecret, child) {
+        return ListView.separated(
+            padding: const EdgeInsets.all(20),
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+            itemCount: otpSecrets.length,
+            itemBuilder: (BuildContext context, int index) {
+              return OTPListItem(
+                  otpSecret: otpSecrets[index],
+                  selected: otpSecrets[index] == activeSecret.otpSecret);
+            });
+      });
     });
+  }
+}
+
+class OTPListItem extends StatelessWidget {
+  const OTPListItem(
+      {super.key, required this.otpSecret, required this.selected});
+
+  final OTPSecret otpSecret;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 60,
+        child: Center(
+          child: ListTile(
+            tileColor:
+                selected ? Theme.of(context).colorScheme.inversePrimary : null,
+            leading: const Icon(Icons.arrow_forward),
+            title: Text("${otpSecret.issuer}\n${otpSecret.username}"),
+            onTap: () => Provider.of<ActiveOTPSecret>(context, listen: false)
+                .otpSecret = otpSecret,
+          ),
+        ));
   }
 }
 
