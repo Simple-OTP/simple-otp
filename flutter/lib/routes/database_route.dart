@@ -13,7 +13,6 @@ import '../widgets/otp_selection_item.dart';
 // and the other is the code generation view to the right for the selected
 // entry.
 class DatabaseRoute extends StatelessWidget {
-
   const DatabaseRoute({super.key});
 
   static final logger = Logger();
@@ -33,6 +32,7 @@ class DatabaseRoute extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: const Icon(Icons.add),
+                tooltip: 'Add Account',
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -41,15 +41,27 @@ class DatabaseRoute extends StatelessWidget {
                 },
               ),
               const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
-              ),
+              PopupMenuButton(
+                  icon: const Icon(Icons.settings),
+                  tooltip: 'Settings',
+                  itemBuilder: (BuildContext context) {
+                    return <PopupMenuEntry>[
+                      PopupMenuItem(
+                        value: 'import',
+                        onTap: () => doNothing(),
+                        child: const Text('Import'),
+                      ),
+                      PopupMenuItem(
+                        value: 'export',
+                        onTap: () => doNothing(),
+                        child: const Text('Export'),
+                      ),
+                    ];
+                  }),
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.lock),
+                tooltip: 'Lock Database',
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -71,6 +83,10 @@ class DatabaseRoute extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void doNothing() {
+    logger.d('do nothing');
   }
 }
 
@@ -97,4 +113,3 @@ class DatabaseListView extends ListView {
     });
   }
 }
-
