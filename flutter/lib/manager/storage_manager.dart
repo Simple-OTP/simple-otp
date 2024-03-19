@@ -30,12 +30,23 @@ class StorageManager {
       final file = await _localFile;
       if (!file.existsSync()) {
         logger.d("File does not exist");
-        return List.empty();
+        return [];
       }
 
       // Read the file
       final contents = await file.readAsString();
-      final jsonDecoded = jsonDecode(contents) as Map<String, dynamic>;
+      return readFromJson(contents);
+    } catch (e) {
+      // If encountering an error, return 0
+      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
+      return [];
+    }
+  }
+
+  Future<List<OTPSecret>> readFromJson(String jsonString) async {
+    logger.d("Reading Database");
+    try {
+      final jsonDecoded = jsonDecode(jsonString) as Map<String, dynamic>;
       final parsed = jsonDecoded['codes'] as List<dynamic>;
       final list =
           parsed.map<OTPSecret>((json) => OTPSecret.fromJson(json)).toList();
@@ -45,7 +56,7 @@ class StorageManager {
     } catch (e) {
       // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      return List.empty();
+      return [];
     }
   }
 }

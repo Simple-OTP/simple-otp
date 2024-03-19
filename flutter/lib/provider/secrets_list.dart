@@ -15,6 +15,11 @@ class SecretList extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addAll(List<OTPSecret> list) {
+    _secrets.addAll(list);
+    notifyListeners();
+  }
+
   void add(OTPSecret secret) {
     _secrets.add(secret);
     notifyListeners();

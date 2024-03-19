@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
+import '../manager/storage_manager.dart';
 import '../provider/secrets_list.dart';
 import '../widgets/add_account_dialog.dart';
 import '../widgets/otp_selection_item.dart';
@@ -48,7 +53,7 @@ class DatabaseRoute extends StatelessWidget {
                     return <PopupMenuEntry>[
                       PopupMenuItem(
                         value: 'import',
-                        onTap: () => doNothing(),
+                        onTap: () => doImport(Provider.of<SecretList>(context, listen: false)),
                         child: const Text('Import'),
                       ),
                       PopupMenuItem(
@@ -87,6 +92,22 @@ class DatabaseRoute extends StatelessWidget {
 
   void doNothing() {
     logger.d('do nothing');
+  }
+
+  /// consider moving this to the storage tier.
+  void doImport(SecretList secretList) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowedExtensions: ['json', 'jsn'],
+    );
+    if (result != null && result.files.isNotEmpty && result.files.single.path != null) {
+      String path = result.files.single.path!;
+      logger.d("Loading $path");
+      File file = File(path);
+      List<OTPSecret> secrets = await StorageManager().readFromJson(file.readAsStringSync());
+      secretList.addAll(secrets);
+    } else {
+      logger.d('no file selected');
+    }
   }
 }
 
