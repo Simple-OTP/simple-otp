@@ -20,7 +20,7 @@ class _OTPWidgetState extends State<OTPWidget> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer timer) {
       setState(() {});
       ();
     });
@@ -54,10 +54,11 @@ class _OTPWidgetState extends State<OTPWidget> {
                 }),
           ],
         ),
-        Text(
-          OTP.remainingSeconds().toString(),
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
+        Center(
+            child: CustomPaint(
+          size: const Size(300, 50),
+          painter: LinePainter(OTP.remainingSeconds()),
+        )),
       ],
     );
   }
@@ -72,5 +73,32 @@ class _OTPWidgetState extends State<OTPWidget> {
             : const Icon(Icons.block),
       );
     });
+  }
+}
+
+class LinePainter extends CustomPainter {
+  LinePainter(this.remainingSeconds)
+      : super(repaint: ValueNotifier<int>(remainingSeconds));
+
+  final int remainingSeconds;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var green = Paint()
+      ..color = Colors.green
+      ..strokeWidth = 15;
+
+    var greenWidth = size.width * remainingSeconds / 30;
+    var greenDiff = (size.width - greenWidth)/2;
+
+    Offset greenStart = Offset(greenDiff, size.height);
+    Offset greenEnd =
+        Offset(size.width - greenDiff, size.height);
+    canvas.drawLine(greenStart, greenEnd, green);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }

@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
 import '../provider/secrets_list.dart';
+import '../widgets/add_account_dialog.dart';
+import '../widgets/otp_selection_item.dart';
 
 // This app view holds onto the database.
 // inside is two widgets, once is the database list itself,
 // and the other is the code generation view to the right for the selected
 // entry.
-class DatabaseRoute extends StatefulWidget {
+class DatabaseRoute extends StatelessWidget {
+
   const DatabaseRoute({super.key});
 
-  @override
-  State<DatabaseRoute> createState() => _DatabaseRouteState();
-}
-
-class _DatabaseRouteState extends State<DatabaseRoute> {
-  var logger = Logger();
+  static final logger = Logger();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +61,7 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: DatabaseView(),
+              child: DatabaseListView(),
             ),
             const Expanded(
               flex: 3,
@@ -77,8 +74,8 @@ class _DatabaseRouteState extends State<DatabaseRoute> {
   }
 }
 
-class DatabaseView extends ListView {
-  DatabaseView({super.key});
+class DatabaseListView extends ListView {
+  DatabaseListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +89,7 @@ class DatabaseView extends ListView {
                 const Divider(),
             itemCount: otpSecrets.length,
             itemBuilder: (BuildContext context, int index) {
-              return OTPListItem(
+              return OTPSelectionItem(
                   otpSecret: otpSecrets[index],
                   selected: otpSecrets[index] == activeSecret.otpSecret);
             });
@@ -101,74 +98,3 @@ class DatabaseView extends ListView {
   }
 }
 
-class OTPListItem extends StatelessWidget {
-  const OTPListItem(
-      {super.key, required this.otpSecret, required this.selected});
-
-  final OTPSecret otpSecret;
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 60,
-        child: Center(
-          child: ListTile(
-            tileColor:
-                selected ? Theme.of(context).colorScheme.inversePrimary : null,
-            leading: const Icon(Icons.arrow_forward),
-            title: Text("${otpSecret.issuer}\n${otpSecret.username}"),
-            onTap: () => Provider.of<ActiveOTPSecret>(context, listen: false)
-                .otpSecret = otpSecret,
-          ),
-        ));
-  }
-}
-
-class AddAccount extends SimpleDialog {
-  const AddAccount({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: const Text('Add Account'),
-      children: <Widget>[
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Issuer',
-          ),
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Username',
-          ),
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Secret',
-          ),
-        ),
-        Row(
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Add'),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
