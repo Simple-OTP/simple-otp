@@ -36,15 +36,14 @@ class DatabaseRoute extends StatelessWidget {
           child: Row(
             children: <Widget>[
               IconButton(
-                icon: const Icon(Icons.add),
-                tooltip: 'Add Account',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AddAccount()));
-                },
-              ),
+                  icon: const Icon(Icons.add),
+                  tooltip: 'Add Account',
+                  onPressed: () => showDialog<void>(
+                      context: context,
+                      barrierDismissible: true, // user must tap button!
+                      builder: (BuildContext context) {
+                        return const AddAccount();
+                      })),
               const Spacer(),
               PopupMenuButton(
                   icon: const Icon(Icons.settings),
@@ -53,7 +52,8 @@ class DatabaseRoute extends StatelessWidget {
                     return <PopupMenuEntry>[
                       PopupMenuItem(
                         value: 'import',
-                        onTap: () => doImport(Provider.of<SecretList>(context, listen: false)),
+                        onTap: () => doImport(
+                            Provider.of<SecretList>(context, listen: false)),
                         child: const Text('Import'),
                       ),
                       PopupMenuItem(
@@ -99,11 +99,14 @@ class DatabaseRoute extends StatelessWidget {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowedExtensions: ['json', 'jsn'],
     );
-    if (result != null && result.files.isNotEmpty && result.files.single.path != null) {
+    if (result != null &&
+        result.files.isNotEmpty &&
+        result.files.single.path != null) {
       String path = result.files.single.path!;
       logger.d("Loading $path");
       File file = File(path);
-      List<OTPSecret> secrets = await StorageManager().readFromJson(file.readAsStringSync());
+      List<OTPSecret> secrets =
+          await StorageManager().readFromJson(file.readAsStringSync());
       secretList.addAll(secrets);
     } else {
       logger.d('no file selected');
