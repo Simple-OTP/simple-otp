@@ -26,21 +26,21 @@ class StorageManager {
 
   Future<List<OTPSecret>> readDatabase() async {
     logger.d("Reading Database");
+    final file = await _localFile;
+    if (!file.existsSync()) {
+      logger.d("File does not exist");
+      return [];
+    }
+    // Read the file
+    String contents;
     try {
-      final file = await _localFile;
-      if (!file.existsSync()) {
-        logger.d("File does not exist");
-        return [];
-      }
-
-      // Read the file
-      final contents = await file.readAsString();
-      return readFromJson(contents);
+      contents = await file.readAsString();
     } catch (e) {
       // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      return [];
+      throw("Could not read internal database.");
     }
+    return readFromJson(contents);
   }
 
   Future<List<OTPSecret>> readFromJson(String jsonString) async {
@@ -56,7 +56,7 @@ class StorageManager {
     } catch (e) {
       // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      return [];
+      throw ("Could not read json");
     }
   }
 }

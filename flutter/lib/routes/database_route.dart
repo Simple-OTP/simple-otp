@@ -11,6 +11,7 @@ import 'package:simple_otp/widgets/otp_widget.dart';
 import '../manager/storage_manager.dart';
 import '../provider/secrets_list.dart';
 import '../widgets/add_account_dialog.dart';
+import '../widgets/error_dialog.dart';
 import '../widgets/otp_selection_item.dart';
 
 // This app view holds onto the database.
@@ -53,7 +54,14 @@ class DatabaseRoute extends StatelessWidget {
                       PopupMenuItem(
                         value: 'import',
                         onTap: () => doImport(
-                            Provider.of<SecretList>(context, listen: false)),
+                            Provider.of<SecretList>(context, listen: false),
+                            (e) => showDialog<void>(
+                                context: context,
+                                barrierDismissible: true, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return ErrorDialog(
+                                      message: 'Error: $e');
+                                })),
                         child: const Text('Import'),
                       ),
                       PopupMenuItem(
@@ -95,21 +103,28 @@ class DatabaseRoute extends StatelessWidget {
   }
 
   /// consider moving this to the storage tier.
-  void doImport(SecretList secretList) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowedExtensions: ['json', 'jsn'],
-    );
-    if (result != null &&
-        result.files.isNotEmpty &&
-        result.files.single.path != null) {
-      String path = result.files.single.path!;
-      logger.d("Loading $path");
-      File file = File(path);
-      List<OTPSecret> secrets =
-          await StorageManager().readFromJson(file.readAsStringSync());
-      secretList.addAll(secrets);
-    } else {
-      logger.d('no file selected');
+  void doImport(
+      final SecretList secretList,
+      final void Function(Object) onError) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowedExtensions: ['json', 'jsn'],
+      );
+      if (result != null &&
+          result.files.isNotEmpty &&
+          result.files.single.path != null) {
+        String path = result.files.single.path!;
+        logger.d("Loading $path");
+        File file = File(path);
+        List<OTPSecret> secrets =
+        await StorageManager().readFromJson(file.readAsStringSync());
+        secretList.addAll(secrets);
+      } else {
+        logger.d('no file selected');
+      }
+    } catch (e) {
+      logger.e('Error: $e', error: e, stackTrace: StackTrace.current);
+      onError.call(e);
     }
   }
 }

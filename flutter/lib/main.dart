@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
@@ -5,6 +7,17 @@ import 'package:simple_otp/provider/secrets_list.dart';
 import 'package:simple_otp/routes/lock_route.dart';
 
 void main() {
+  // Error Handling
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FlutterError.presentError(FlutterErrorDetails(
+      exception: error,
+      stack: stack,
+    ));
+    return true;
+  };
   runApp(const OTPProviders());
 }
 
