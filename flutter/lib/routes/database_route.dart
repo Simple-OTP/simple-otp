@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
@@ -10,6 +9,7 @@ import 'package:simple_otp/widgets/otp_widget.dart';
 
 import '../manager/storage_manager.dart';
 import '../provider/secrets_list.dart';
+import '../util/log.dart';
 import '../widgets/add_account_dialog.dart';
 import '../widgets/error_dialog.dart';
 import '../widgets/otp_selection_item.dart';
@@ -20,8 +20,6 @@ import '../widgets/otp_selection_item.dart';
 // entry.
 class DatabaseRoute extends StatelessWidget {
   const DatabaseRoute({super.key});
-
-  static final logger = Logger();
 
   @override
   Widget build(BuildContext context) {

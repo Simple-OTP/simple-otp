@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../util/log.dart';
 
 class NonceManager {
   static const _fileName = "nonce.cfg";
-
-  var logger = Logger();
 
   Future<String> get _localPath async {
     final directory = await getApplicationSupportDirectory();
