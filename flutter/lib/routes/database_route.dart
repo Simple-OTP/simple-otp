@@ -57,10 +57,10 @@ class DatabaseRoute extends StatelessWidget {
                             Provider.of<SecretList>(context, listen: false),
                             (e) => showDialog<void>(
                                 context: context,
-                                barrierDismissible: true, // user must tap button!
+                                barrierDismissible: true,
+                                // user must tap button!
                                 builder: (BuildContext context) {
-                                  return ErrorDialog(
-                                      message: 'Error: $e');
+                                  return ErrorDialog(message: 'Error: $e');
                                 })),
                         child: const Text('Import'),
                       ),
@@ -104,8 +104,7 @@ class DatabaseRoute extends StatelessWidget {
 
   /// consider moving this to the storage tier.
   void doImport(
-      final SecretList secretList,
-      final void Function(Object) onError) async {
+      final SecretList secretList, final void Function(Object) onError) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['json', 'jsn'],
@@ -117,7 +116,7 @@ class DatabaseRoute extends StatelessWidget {
         logger.d("Loading $path");
         File file = File(path);
         List<OTPSecret> secrets =
-        await StorageManager().readFromJson(file.readAsStringSync());
+            await const StorageManager().readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
       } else {
         logger.d('no file selected');

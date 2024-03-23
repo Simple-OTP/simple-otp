@@ -6,6 +6,8 @@ import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 import 'package:simple_otp/routes/lock_route.dart';
 
+import 'manager/storage_manager.dart';
+
 void main() {
   // Error Handling
   FlutterError.onError = (details) {
@@ -22,19 +24,23 @@ void main() {
 }
 
 class OTPProviders extends StatelessWidget {
-  const OTPProviders({super.key});
+  final StorageManager? storageManager;
+
+  const OTPProviders({super.key, this.storageManager});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => SecretList()),
       ChangeNotifierProvider(create: (context) => ActiveOTPSecret()),
-    ], child: const OTPApp());
+    ], child: OTPApp(storageManager: storageManager));
   }
 }
 
 class OTPApp extends StatelessWidget {
-  const OTPApp({super.key});
+  final StorageManager? storageManager;
+
+  const OTPApp({super.key, this.storageManager});
 
   // This widget is the root of your application.
   @override
@@ -45,7 +51,9 @@ class OTPApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LockRoute(),
+      home: LockRoute(
+        storageManager: storageManager,
+      ),
     );
   }
 }

@@ -89,11 +89,10 @@ class LinePainter extends CustomPainter {
       ..strokeWidth = 15;
 
     var greenWidth = size.width * remainingSeconds / 30;
-    var greenDiff = (size.width - greenWidth)/2;
+    var greenDiff = (size.width - greenWidth) / 2;
 
     Offset greenStart = Offset(greenDiff, size.height);
-    Offset greenEnd =
-        Offset(size.width - greenDiff, size.height);
+    Offset greenEnd = Offset(size.width - greenDiff, size.height);
     canvas.drawLine(greenStart, greenEnd, green);
   }
 

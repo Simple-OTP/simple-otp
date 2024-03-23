@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
+
+import '../util/log.dart';
 
 class StorageManager {
   static const fileName = "tokens.json";
 
-  var logger = Logger();
+  const StorageManager();
 
   Future<String> get _localPath async {
     final directory = await getApplicationSupportDirectory();
@@ -38,7 +39,7 @@ class StorageManager {
     } catch (e) {
       // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw("Could not read internal database.");
+      throw ("Could not read internal database.");
     }
     return readFromJson(contents);
   }
@@ -58,5 +59,10 @@ class StorageManager {
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
       throw ("Could not read json");
     }
+  }
+
+  Future<bool> doesDatabaseExist() async {
+    final file = await _localFile;
+    return file.exists();
   }
 }
