@@ -44,7 +44,19 @@ class StorageManager {
     return readFromJson(contents);
   }
 
-  Future<List<OTPSecret>> readFromJson(String jsonString) async {
+  Future<void> writeDatabase(List<OTPSecret> secrets) async {
+    logger.d("Writing Database");
+    final file = await _localFile;
+    final jsonString = writeToJSON(secrets);
+    await file.writeAsString(jsonString);
+  }
+
+  String writeToJSON(List<OTPSecret> secrets) {
+    logger.d("Writing to String");
+    return jsonEncode({"codes": secrets});
+  }
+
+  List<OTPSecret> readFromJson(String jsonString) {
     logger.d("Reading Database");
     try {
       final jsonDecoded = jsonDecode(jsonString) as Map<String, dynamic>;

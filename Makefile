@@ -10,6 +10,7 @@ rust_app:
 flutter_app:
 	cd flutter && flutter pub get
 	cd flutter && flutter pub outdated
+	cd flutter && dart run build_runner build
 	cd flutter && dart fix --apply
 	cd flutter && flutter analyze .
 	cd flutter && flutter test

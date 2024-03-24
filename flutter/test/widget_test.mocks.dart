@@ -6,6 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:simple_otp/manager/storage_manager.dart' as _i2;
 import 'package:simple_otp/model/otp_secret.dart' as _i4;
 
@@ -40,14 +41,39 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
       ) as _i3.Future<List<_i4.OTPSecret>>);
 
   @override
-  _i3.Future<List<_i4.OTPSecret>> readFromJson(String? jsonString) =>
+  _i3.Future<void> writeDatabase(List<_i4.OTPSecret>? secrets) =>
       (super.noSuchMethod(
+        Invocation.method(
+          #writeDatabase,
+          [secrets],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  String writeToJSON(List<_i4.OTPSecret>? secrets) => (super.noSuchMethod(
+        Invocation.method(
+          #writeToJSON,
+          [secrets],
+        ),
+        returnValue: _i5.dummyValue<String>(
+          this,
+          Invocation.method(
+            #writeToJSON,
+            [secrets],
+          ),
+        ),
+      ) as String);
+
+  @override
+  List<_i4.OTPSecret> readFromJson(String? jsonString) => (super.noSuchMethod(
         Invocation.method(
           #readFromJson,
           [jsonString],
         ),
-        returnValue: _i3.Future<List<_i4.OTPSecret>>.value(<_i4.OTPSecret>[]),
-      ) as _i3.Future<List<_i4.OTPSecret>>);
+        returnValue: <_i4.OTPSecret>[],
+      ) as List<_i4.OTPSecret>);
 
   @override
   _i3.Future<bool> doesDatabaseExist() => (super.noSuchMethod(

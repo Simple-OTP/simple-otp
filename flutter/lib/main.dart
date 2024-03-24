@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 import 'package:simple_otp/routes/lock_route.dart';
@@ -33,6 +34,7 @@ class OTPProviders extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => SecretList()),
       ChangeNotifierProvider(create: (context) => ActiveOTPSecret()),
+      ChangeNotifierProvider(create: (context) => DatabaseSecret()),
     ], child: OTPApp(storageManager: storageManager));
   }
 }

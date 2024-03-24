@@ -5,6 +5,8 @@ import 'package:path_provider/path_provider.dart';
 
 import '../util/log.dart';
 
+/// Manages the Nonce for the Argon2id algorithm used to convert the password
+/// to a secret key.
 class NonceManager {
   static const _fileName = "nonce.cfg";
 

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../manager/nonce_manager.dart';
 import 'error_dialog.dart';
 
 class NewDatabase extends SimpleDialog {
-  NewDatabase({super.key});
+  final NonceManager nonceManager;
+
+  NewDatabase({super.key, NonceManager? nonceManager})
+      : nonceManager = nonceManager ?? NonceManager();
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _reenterPasswordController =
@@ -54,7 +58,7 @@ class NewDatabase extends SimpleDialog {
                         return const ErrorDialog(
                             message: 'Passwords do not match');
                       });
-                }
+                } else {}
               },
               child: const Text('Create'),
             ),

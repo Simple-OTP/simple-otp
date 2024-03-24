@@ -114,7 +114,7 @@ class DatabaseRoute extends StatelessWidget {
         logger.d("Loading $path");
         File file = File(path);
         List<OTPSecret> secrets =
-            await const StorageManager().readFromJson(file.readAsStringSync());
+            const StorageManager().readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
       } else {
         logger.d('no file selected');
