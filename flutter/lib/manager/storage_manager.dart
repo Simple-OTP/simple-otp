@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:cryptography/cryptography.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
@@ -42,6 +44,29 @@ class StorageManager {
       throw ("Could not read internal database.");
     }
     return readFromJson(contents);
+  }
+
+  Future<Uint8List> encrypt(String jsonString, SecretKey secretKey) async {
+    logger.d("Encrypting Database");
+    final algorithm = AesGcm.with256bits();
+    final secretBox = await algorithm.encryptString(
+      jsonString,
+      secretKey: secretKey,
+    );
+    return secretBox.concatenation();
+  }
+
+  Future<String> decrypt(Uint8List data, SecretKey secretKey) async {
+    logger.d("Decrypting Database");
+    final algorithm = AesGcm.with256bits();
+    final secretBox = SecretBox.fromConcatenation(data,
+        nonceLength: algorithm.nonceLength,
+        macLength: algorithm.macAlgorithm.macLength);
+    final decrypted = await algorithm.decrypt(
+      secretBox,
+      secretKey: secretKey,
+    );
+    return utf8.decode(decrypted);
   }
 
   Future<void> writeDatabase(List<OTPSecret> secrets) async {
