@@ -17,7 +17,7 @@ class DatabaseSecret extends ChangeNotifier {
   /// on March 24, 2024
   /// Upped the iterations to 4 for a bit of future proofing. Will need to
   /// eventually store the configuration so we can upgrade later.
-  void setSecretFromPassword(String password) async {
+  Future<SecretKey> setSecretFromPassword(String password) async {
     final algorithm = Argon2id(
       parallelism: 1,
       memory: 12000, // 10 000 x 1kB block = 10 MB
@@ -30,6 +30,7 @@ class DatabaseSecret extends ChangeNotifier {
       nonce: nonce,
     );
     notifyListeners();
+    return _secret!;
   }
 
   void clear() {

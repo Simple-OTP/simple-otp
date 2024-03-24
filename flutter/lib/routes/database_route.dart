@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
+import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
@@ -53,6 +54,7 @@ class DatabaseRoute extends StatelessWidget {
                         value: 'import',
                         onTap: () => doImport(
                             Provider.of<SecretList>(context, listen: false),
+                            Provider.of<DatabaseSecret>(context, listen: false),
                             (e) => showDialog<void>(
                                 context: context,
                                 barrierDismissible: true,
@@ -64,7 +66,7 @@ class DatabaseRoute extends StatelessWidget {
                       ),
                       PopupMenuItem(
                         value: 'export',
-                        onTap: () => doNothing(),
+                        onTap: () => doExport(),
                         child: const Text('Export'),
                       ),
                     ];
@@ -74,6 +76,7 @@ class DatabaseRoute extends StatelessWidget {
                 icon: const Icon(Icons.lock),
                 tooltip: 'Lock Database',
                 onPressed: () {
+                  Provider.of<DatabaseSecret>(context, listen: false).clear();
                   Navigator.pop(context);
                 },
               ),
@@ -96,13 +99,16 @@ class DatabaseRoute extends StatelessWidget {
     );
   }
 
-  void doNothing() {
+  void doExport() {
     logger.d('do nothing');
   }
 
   /// consider moving this to the storage tier.
   void doImport(
-      final SecretList secretList, final void Function(Object) onError) async {
+      final SecretList secretList,
+      final DatabaseSecret databaseSecret,
+      final void Function(Object) onError) async {
+    const StorageManager storageManager = StorageManager();
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['json', 'jsn'],
@@ -114,8 +120,10 @@ class DatabaseRoute extends StatelessWidget {
         logger.d("Loading $path");
         File file = File(path);
         List<OTPSecret> secrets =
-            const StorageManager().readFromJson(file.readAsStringSync());
+            storageManager.readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
+        storageManager.writeDatabase(
+            secretList.otpSecrets, databaseSecret.secret!);
       } else {
         logger.d('no file selected');
       }

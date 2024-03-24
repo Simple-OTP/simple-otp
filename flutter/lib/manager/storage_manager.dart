@@ -27,7 +27,7 @@ class StorageManager {
     return File(completePath);
   }
 
-  Future<List<OTPSecret>> readDatabase() async {
+  Future<List<OTPSecret>> readDatabase(SecretKey secretKey) async {
     logger.d("Reading Database");
     final file = await _localFile;
     if (!file.existsSync()) {
@@ -35,15 +35,16 @@ class StorageManager {
       return [];
     }
     // Read the file
-    String contents;
+    Uint8List contents;
     try {
-      contents = await file.readAsString();
+      contents = await file.readAsBytes();
     } catch (e) {
       // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
       throw ("Could not read internal database.");
     }
-    return readFromJson(contents);
+    final decrypted = await decrypt(contents, secretKey);
+    return readFromJson(decrypted);
   }
 
   Future<Uint8List> encrypt(String jsonString, SecretKey secretKey) async {
@@ -69,11 +70,13 @@ class StorageManager {
     return utf8.decode(decrypted);
   }
 
-  Future<void> writeDatabase(List<OTPSecret> secrets) async {
+  Future<void> writeDatabase(
+      List<OTPSecret> secrets, SecretKey secretKey) async {
     logger.d("Writing Database");
     final file = await _localFile;
     final jsonString = writeToJSON(secrets);
-    await file.writeAsString(jsonString);
+    final encrypted = await encrypt(jsonString, secretKey);
+    await file.writeAsBytes(encrypted);
   }
 
   String writeToJSON(List<OTPSecret> secrets) {

@@ -4,9 +4,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
-import 'dart:typed_data' as _i5;
+import 'dart:typed_data' as _i6;
 
-import 'package:cryptography/cryptography.dart' as _i6;
+import 'package:cryptography/cryptography.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 import 'package:simple_otp/manager/storage_manager.dart' as _i2;
@@ -34,18 +34,19 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
   }
 
   @override
-  _i3.Future<List<_i4.OTPSecret>> readDatabase() => (super.noSuchMethod(
+  _i3.Future<List<_i4.OTPSecret>> readDatabase(_i5.SecretKey? secretKey) =>
+      (super.noSuchMethod(
         Invocation.method(
           #readDatabase,
-          [],
+          [secretKey],
         ),
         returnValue: _i3.Future<List<_i4.OTPSecret>>.value(<_i4.OTPSecret>[]),
       ) as _i3.Future<List<_i4.OTPSecret>>);
 
   @override
-  _i3.Future<_i5.Uint8List> encrypt(
+  _i3.Future<_i6.Uint8List> encrypt(
     String? jsonString,
-    _i6.SecretKey? secretKey,
+    _i5.SecretKey? secretKey,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -55,13 +56,13 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
             secretKey,
           ],
         ),
-        returnValue: _i3.Future<_i5.Uint8List>.value(_i5.Uint8List(0)),
-      ) as _i3.Future<_i5.Uint8List>);
+        returnValue: _i3.Future<_i6.Uint8List>.value(_i6.Uint8List(0)),
+      ) as _i3.Future<_i6.Uint8List>);
 
   @override
   _i3.Future<String> decrypt(
-    _i5.Uint8List? data,
-    _i6.SecretKey? secretKey,
+    _i6.Uint8List? data,
+    _i5.SecretKey? secretKey,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -84,11 +85,17 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
       ) as _i3.Future<String>);
 
   @override
-  _i3.Future<void> writeDatabase(List<_i4.OTPSecret>? secrets) =>
+  _i3.Future<void> writeDatabase(
+    List<_i4.OTPSecret>? secrets,
+    _i5.SecretKey? secretKey,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #writeDatabase,
-          [secrets],
+          [
+            secrets,
+            secretKey,
+          ],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
