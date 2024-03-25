@@ -39,7 +39,6 @@ class StorageManager {
     try {
       contents = await file.readAsBytes();
     } catch (e) {
-      // If encountering an error, return 0
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
       throw ("Could not read internal database.");
     }
@@ -60,14 +59,25 @@ class StorageManager {
   Future<String> decrypt(Uint8List data, SecretKey secretKey) async {
     logger.d("Decrypting Database");
     final algorithm = AesGcm.with256bits();
-    final secretBox = SecretBox.fromConcatenation(data,
-        nonceLength: algorithm.nonceLength,
-        macLength: algorithm.macAlgorithm.macLength);
-    final decrypted = await algorithm.decrypt(
-      secretBox,
-      secretKey: secretKey,
-    );
-    return utf8.decode(decrypted);
+    SecretBox? secretBox;
+    try {
+      secretBox = SecretBox.fromConcatenation(data,
+          nonceLength: algorithm.nonceLength,
+          macLength: algorithm.macAlgorithm.macLength);
+    } catch (e) {
+      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
+      throw ("Database file is corrupted.");
+    }
+    try {
+      final decrypted = await algorithm.decrypt(
+        secretBox,
+        secretKey: secretKey,
+      );
+      return utf8.decode(decrypted);
+    } catch (e) {
+      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
+      throw ("Bad Password.");
+    }
   }
 
   Future<void> writeDatabase(

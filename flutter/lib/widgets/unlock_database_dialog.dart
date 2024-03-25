@@ -5,6 +5,7 @@ import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
 import '../routes/database_route.dart';
+import 'error_dialog.dart';
 
 class UnlockDatabase extends SimpleDialog {
   final StorageManager storageManager;
@@ -17,7 +18,7 @@ class UnlockDatabase extends SimpleDialog {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text('Add Account'),
+      title: const Text('Enter in current password'),
       children: <Widget>[
         TextField(
           obscureText: true,
@@ -40,7 +41,7 @@ class UnlockDatabase extends SimpleDialog {
             const Spacer(),
             ElevatedButton(
               onPressed: () => handleUnlockDatabase(context),
-              child: const Text('Create'),
+              child: const Text('Unlock'),
             ),
           ],
         ),
@@ -64,6 +65,14 @@ class UnlockDatabase extends SimpleDialog {
             MaterialPageRoute(
               builder: (context) => const DatabaseRoute(),
             ));
+      }).catchError((e) {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              return ErrorDialog(message: "$e");
+            });
+        return null;
       });
     });
   }
