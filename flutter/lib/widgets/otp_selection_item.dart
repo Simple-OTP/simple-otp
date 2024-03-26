@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../model/otp_secret.dart';
 import '../provider/otp_secret_provider.dart';
+import 'delete_otp_secret_dialog.dart';
 
 class OTPSelectionItem extends StatelessWidget {
   const OTPSelectionItem(
@@ -16,13 +17,30 @@ class OTPSelectionItem extends StatelessWidget {
     return SizedBox(
         height: 60,
         child: Center(
-          child: ListTile(
-            tileColor:
-                selected ? Theme.of(context).colorScheme.inversePrimary : null,
-            leading: const Icon(Icons.arrow_forward),
-            title: Text("${otpSecret.issuer}\n${otpSecret.username}"),
-            onTap: () => Provider.of<ActiveOTPSecret>(context, listen: false)
-                .otpSecret = otpSecret,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ListTile(
+                  tileColor: selected
+                      ? Theme.of(context).colorScheme.inversePrimary
+                      : null,
+                  leading: const Icon(Icons.arrow_forward),
+                  title: Text("${otpSecret.issuer}\n${otpSecret.username}"),
+                  onTap: () =>
+                      Provider.of<ActiveOTPSecret>(context, listen: false)
+                          .otpSecret = otpSecret,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () => showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return DeleteOTPSecret(otpSecret: otpSecret);
+                    }),
+              ),
+            ],
           ),
         ));
   }
