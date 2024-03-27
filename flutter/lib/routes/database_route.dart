@@ -42,7 +42,7 @@ class DatabaseRoute extends StatelessWidget {
                       context: context,
                       barrierDismissible: true, // user must tap button!
                       builder: (BuildContext context) {
-                        return const AddAccount();
+                        return AddAccount();
                       })),
               const Spacer(),
               PopupMenuButton(

@@ -5,6 +5,7 @@ import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
+import '../provider/otp_secret_provider.dart';
 import 'error_dialog.dart';
 
 class DeleteOTPSecret extends SimpleDialog {
@@ -44,6 +45,7 @@ class DeleteOTPSecret extends SimpleDialog {
     Provider.of<SecretList>(context, listen: false).remove(otpSecret);
     final list = Provider.of<SecretList>(context, listen: false).otpSecrets;
     final secret = Provider.of<DatabaseSecret>(context, listen: false).secret!;
+    Provider.of<ActiveOTPSecret>(context, listen: false).otpSecret = null;
     storageManager.writeDatabase(list, secret).then((value) {
       Navigator.pop(context);
     }).catchError((e) {
