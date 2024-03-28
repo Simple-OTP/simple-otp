@@ -5,12 +5,8 @@
 
 version: 2
 updates:
-  - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/rust/otp" # Location of package manifests
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/rust/ui" # Location of package manifests
+  - package-ecosystem: "pub" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    open-pull-requests-limit: 5
     schedule:
       interval: "daily"
