@@ -1,4 +1,4 @@
-name: Flutter Build
+name: SimpleOTP Build
 
 on:
   push:
@@ -26,17 +26,14 @@ jobs:
           channel: 'stable' # 'beta', 'dev', 'alpha', default to: 'stable'
 
       - name: Getting dependencies
-        working-directory: ./flutter
         run: flutter pub get
 
       # Statically analyze the Dart code for any errors.
       - name: Analyzing
-        working-directory: ./flutter
         run: flutter analyze .
 
       # Run widget tests for our flutter project.
       - name: Testing
-        working-directory: ./flutter
         run: flutter test
 
       # Build apk.
