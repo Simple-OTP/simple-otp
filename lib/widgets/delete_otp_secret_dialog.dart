@@ -5,7 +5,7 @@ import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
-import '../provider/otp_secret_provider.dart';
+import '../provider/active_otp_secret_provider.dart';
 import 'error_dialog.dart';
 
 class DeleteOTPSecret extends SimpleDialog {

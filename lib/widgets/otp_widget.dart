@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:otp/otp.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
-import 'package:simple_otp/provider/otp_secret_provider.dart';
+import 'package:simple_otp/provider/active_otp_secret_provider.dart';
 
 class OTPWidget extends StatefulWidget {
   const OTPWidget({super.key});

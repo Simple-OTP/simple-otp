@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../model/otp_secret.dart';
-import '../provider/otp_secret_provider.dart';
+import '../provider/active_otp_secret_provider.dart';
 import 'delete_otp_secret_dialog.dart';
 
 class OTPSelectionItem extends StatelessWidget {

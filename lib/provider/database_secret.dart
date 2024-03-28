@@ -20,7 +20,7 @@ class DatabaseSecret extends ChangeNotifier {
   Future<SecretKey> setSecretFromPassword(String password) async {
     final algorithm = Argon2id(
       parallelism: 1,
-      memory: 12000, // 10 000 x 1kB block = 10 MB
+      memory: 12000, // 12 000 x 1kB block = 12 MB
       iterations: 4,
       hashLength: 32,
     );

@@ -5,7 +5,7 @@ import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
 import '../provider/database_secret.dart';
-import '../provider/otp_secret_provider.dart';
+import '../provider/active_otp_secret_provider.dart';
 import '../provider/secrets_list.dart';
 import 'error_dialog.dart';
 

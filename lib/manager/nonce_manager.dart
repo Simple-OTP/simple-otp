@@ -23,7 +23,8 @@ class NonceManager {
   }
 
   List<int> generateNonce() {
-    return List<int>.generate(16, (index) => Random.secure().nextInt(16));
+    var random = Random.secure();
+    return List<int>.generate(16, (index) => random.nextInt(16));
   }
 
   List<int> nonceFromString(String nonce) {

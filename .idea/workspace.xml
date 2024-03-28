@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/secrets_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/secrets_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/database_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/database_route.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/manager/nonce_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/manager/nonce_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/provider/database_secret.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/database_secret.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1711594540074</updated>
       <workItem from="1711594541447" duration="1000" />
-      <workItem from="1711594543788" duration="2699000" />
+      <workItem from="1711594543788" duration="3242000" />
     </task>
     <servers />
   </component>
