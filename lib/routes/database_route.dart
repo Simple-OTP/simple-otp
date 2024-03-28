@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -20,7 +21,10 @@ import '../widgets/otp_selection_item.dart';
 // and the other is the code generation view to the right for the selected
 // entry.
 class DatabaseRoute extends StatelessWidget {
-  const DatabaseRoute({super.key});
+  const DatabaseRoute({super.key, StorageManager? storageManager})
+      : storageManager = storageManager ?? const StorageManager();
+
+  final StorageManager storageManager;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,8 @@ class DatabaseRoute extends StatelessWidget {
                       ),
                       PopupMenuItem(
                         value: 'export',
-                        onTap: () => doExport(),
+                        onTap: () => doExport(
+                            Provider.of<SecretList>(context, listen: false)),
                         child: const Text('Export'),
                       ),
                     ];
@@ -99,8 +104,22 @@ class DatabaseRoute extends StatelessWidget {
     );
   }
 
-  void doExport() {
-    logger.d('do nothing');
+  void doExport(final SecretList secretList) {
+    final String json = storageManager.writeToJSON(secretList.otpSecrets);
+    FilePicker.platform
+        .saveFile(
+            fileName: 'simple_otp.json',
+            allowedExtensions: ['json'],
+            type: FileType.any,
+            bytes: utf8.encode(json))
+        .then((value) {
+      // If its not null, and we are not mobile, then we have to write it.
+      if (value != null && !(Platform.isAndroid || Platform.isIOS)) {
+        File file = File(value);
+        file.writeAsStringSync(json);
+        logger.d('File saved: $value');
+      }
+    });
   }
 
   /// consider moving this to the storage tier.
@@ -108,7 +127,6 @@ class DatabaseRoute extends StatelessWidget {
       final SecretList secretList,
       final DatabaseSecret databaseSecret,
       final void Function(Object) onError) async {
-    const StorageManager storageManager = StorageManager();
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['json', 'jsn'],

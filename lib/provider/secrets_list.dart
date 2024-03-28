@@ -18,14 +18,17 @@ class SecretList extends ChangeNotifier {
 
   void addAll(List<OTPSecret> list) {
     _secrets.addAll(list);
+    _secrets = _secrets.toSet().toList(); // remove dups
     _secrets.sort();
     notifyListeners();
   }
 
   void add(OTPSecret secret) {
-    _secrets.add(secret);
-    _secrets.sort();
-    notifyListeners();
+    if (!_secrets.contains(secret)) {
+      _secrets.add(secret);
+      _secrets.sort();
+      notifyListeners();
+    }
   }
 
   void remove(OTPSecret secret) {
