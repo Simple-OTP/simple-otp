@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
-import '../provider/database_secret.dart';
 import '../provider/active_otp_secret_provider.dart';
 import '../provider/secrets_list.dart';
 import 'error_dialog.dart';
@@ -74,8 +73,7 @@ class AddAccount extends SimpleDialog {
       Provider.of<ActiveOTPSecret>(context, listen: false).otpSecret =
           otpSecret;
       final list = Provider.of<SecretList>(context, listen: false).otpSecrets;
-      final secret =
-          Provider.of<DatabaseSecret>(context, listen: false).secret!;
+      final secret = Provider.of<SecretList>(context, listen: false).secret!;
       storageManager.writeDatabase(list, secret).then((value) {
         Navigator.pop(context);
       }).catchError((e) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
-import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
 import '../routes/database_route.dart';
@@ -52,7 +51,7 @@ class UnlockDatabase extends SimpleDialog {
   void handleUnlockDatabase(BuildContext context) {
     final password = _passwordController.text;
     // Setup the secret key
-    Provider.of<DatabaseSecret>(context, listen: false)
+    Provider.of<SecretList>(context, listen: false)
         .setSecretFromPassword(password)
         .then((secretKey) {
       // Write the empty database

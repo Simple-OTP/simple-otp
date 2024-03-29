@@ -5,7 +5,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
-import 'package:simple_otp/provider/database_secret.dart';
 import 'package:simple_otp/provider/active_otp_secret_provider.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
 
@@ -58,7 +57,6 @@ class DatabaseRoute extends StatelessWidget {
                         value: 'import',
                         onTap: () => doImport(
                             Provider.of<SecretList>(context, listen: false),
-                            Provider.of<DatabaseSecret>(context, listen: false),
                             (e) => showDialog<void>(
                                 context: context,
                                 barrierDismissible: true,
@@ -81,7 +79,7 @@ class DatabaseRoute extends StatelessWidget {
                 icon: const Icon(Icons.lock),
                 tooltip: 'Lock Database',
                 onPressed: () {
-                  Provider.of<DatabaseSecret>(context, listen: false).clear();
+                  Provider.of<SecretList>(context, listen: false).clear();
                   Navigator.pop(context);
                 },
               ),
@@ -124,9 +122,7 @@ class DatabaseRoute extends StatelessWidget {
 
   /// consider moving this to the storage tier.
   void doImport(
-      final SecretList secretList,
-      final DatabaseSecret databaseSecret,
-      final void Function(Object) onError) async {
+      final SecretList secretList, final void Function(Object) onError) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['json', 'jsn'],
@@ -140,8 +136,7 @@ class DatabaseRoute extends StatelessWidget {
         List<OTPSecret> secrets =
             storageManager.readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
-        storageManager.writeDatabase(
-            secretList.otpSecrets, databaseSecret.secret!);
+        storageManager.writeDatabase(secretList.otpSecrets, secretList.secret!);
       } else {
         logger.d('no file selected');
       }
