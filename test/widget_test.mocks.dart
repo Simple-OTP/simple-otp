@@ -102,30 +102,6 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
       ) as _i3.Future<void>);
 
   @override
-  String writeToJSON(List<_i4.OTPSecret>? secrets) => (super.noSuchMethod(
-        Invocation.method(
-          #writeToJSON,
-          [secrets],
-        ),
-        returnValue: _i7.dummyValue<String>(
-          this,
-          Invocation.method(
-            #writeToJSON,
-            [secrets],
-          ),
-        ),
-      ) as String);
-
-  @override
-  List<_i4.OTPSecret> readFromJson(String? jsonString) => (super.noSuchMethod(
-        Invocation.method(
-          #readFromJson,
-          [jsonString],
-        ),
-        returnValue: <_i4.OTPSecret>[],
-      ) as List<_i4.OTPSecret>);
-
-  @override
   _i3.Future<bool> doesDatabaseExist() => (super.noSuchMethod(
         Invocation.method(
           #doesDatabaseExist,

@@ -43,7 +43,7 @@ class StorageManager {
       throw ("Could not read internal database.");
     }
     final decrypted = await decrypt(contents, secretKey);
-    return readFromJson(decrypted);
+    return OTPSecret.readFromJson(decrypted);
   }
 
   Future<Uint8List> encrypt(String jsonString, SecretKey secretKey) async {
@@ -84,31 +84,9 @@ class StorageManager {
       List<OTPSecret> secrets, SecretKey secretKey) async {
     logger.d("Writing Database");
     final file = await _localFile;
-    final jsonString = writeToJSON(secrets);
+    final jsonString = OTPSecret.writeToJSON(secrets);
     final encrypted = await encrypt(jsonString, secretKey);
     await file.writeAsBytes(encrypted);
-  }
-
-  String writeToJSON(List<OTPSecret> secrets) {
-    logger.d("Writing to String");
-    return jsonEncode({"codes": secrets});
-  }
-
-  List<OTPSecret> readFromJson(String jsonString) {
-    logger.d("Reading Database");
-    try {
-      final jsonDecoded = jsonDecode(jsonString) as Map<String, dynamic>;
-      final parsed = jsonDecoded['codes'] as List<dynamic>;
-      final list =
-          parsed.map<OTPSecret>((json) => OTPSecret.fromJson(json)).toList();
-      list.sort();
-      logger.d("result: $list");
-      return list;
-    } catch (e) {
-      // If encountering an error, return 0
-      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw ("Could not read json");
-    }
   }
 
   Future<bool> doesDatabaseExist() async {

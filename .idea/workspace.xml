@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test/otp_secret_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/database_secret.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/secrets_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/secrets_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/manager/storage_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/manager/storage_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/otp_secret.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/otp_secret.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/routes/database_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/database_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/lock_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/lock_route.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/storage_manager_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/storage_manager_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/widget_test.mocks.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.mocks.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1711594540074</updated>
       <workItem from="1711594541447" duration="1000" />
-      <workItem from="1711594543788" duration="7915000" />
+      <workItem from="1711594543788" duration="8657000" />
     </task>
     <servers />
   </component>

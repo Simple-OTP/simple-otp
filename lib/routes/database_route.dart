@@ -103,7 +103,7 @@ class DatabaseRoute extends StatelessWidget {
   }
 
   void doExport(final SecretList secretList) {
-    final String json = storageManager.writeToJSON(secretList.otpSecrets);
+    final String json = OTPSecret.writeToJSON(secretList.otpSecrets);
     FilePicker.platform
         .saveFile(
             fileName: 'simple_otp.json',
@@ -134,7 +134,7 @@ class DatabaseRoute extends StatelessWidget {
         logger.d("Loading $path");
         File file = File(path);
         List<OTPSecret> secrets =
-            storageManager.readFromJson(file.readAsStringSync());
+            OTPSecret.readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
         storageManager.writeDatabase(secretList.otpSecrets, secretList.secret!);
       } else {
