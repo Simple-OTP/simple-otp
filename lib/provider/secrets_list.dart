@@ -48,10 +48,11 @@ class SecretList extends ChangeNotifier {
     notifyListeners();
   }
 
-  void unlockDatabase(String password) async {
-    _secret = await _setSecretFromPassword(password);
-    final secrets = await _storageManager.readDatabase(_secret!);
+  Future<void> unlockDatabase(String password) async {
+    final SecretKey attemptedKey = await _setSecretFromPassword(password);
+    final secrets = await _storageManager.readDatabase(attemptedKey);
     _otpSecrets = secrets;
+    _secret = attemptedKey;
     notifyListeners();
   }
 

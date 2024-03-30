@@ -52,13 +52,21 @@ class UnlockDatabase extends SimpleDialog {
     final password = _passwordController.text;
     // Setup the secret key
     try {
-      Provider.of<SecretList>(context, listen: false).unlockDatabase(password);
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const DatabaseRoute(),
-          ));
+      Provider.of<SecretList>(context, listen: false).unlockDatabase(password).then((_) {
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DatabaseRoute(),
+            ));
+      }).catchError((e) {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              return ErrorDialog(message: "$e");
+            });
+      });
     } catch (e) {
       showDialog<void>(
           context: context,

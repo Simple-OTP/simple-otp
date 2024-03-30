@@ -8,7 +8,7 @@ all: flutter_app
 flutter_app:
 	flutter pub get
 	flutter pub outdated
-	dart run build_runner build
+	dart run build_runner build -d
 	dart fix --apply
 	flutter analyze .
 	flutter test
