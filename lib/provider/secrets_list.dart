@@ -3,16 +3,19 @@ import 'dart:collection';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
+import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
 /// When there are no secrets, the database is locked
 class SecretList extends ChangeNotifier {
   final NonceManager _nonceManager;
+  final StorageManager _storageManager;
   SecretKey? _secret;
   List<OTPSecret> _otpSecrets = [];
 
-  SecretList({NonceManager? nonceManager})
-      : _nonceManager = nonceManager ?? NonceManager();
+  SecretList({NonceManager? nonceManager, StorageManager? storageManager})
+      : _nonceManager = nonceManager ?? NonceManager(),
+        _storageManager = storageManager ?? const StorageManager();
 
   UnmodifiableListView<OTPSecret> get otpSecrets =>
       UnmodifiableListView(_otpSecrets);
@@ -48,6 +51,7 @@ class SecretList extends ChangeNotifier {
     _otpSecrets.addAll(list);
     _otpSecrets = _otpSecrets.toSet().toList(); // remove dups
     _otpSecrets.sort();
+    _storageManager.writeDatabase(_otpSecrets, _secret!);
     notifyListeners();
   }
 
@@ -55,12 +59,14 @@ class SecretList extends ChangeNotifier {
     if (!_otpSecrets.contains(secret)) {
       _otpSecrets.add(secret);
       _otpSecrets.sort();
+      _storageManager.writeDatabase(_otpSecrets, _secret!);
       notifyListeners();
     }
   }
 
   void remove(OTPSecret secret) {
     _otpSecrets.remove(secret);
+    _storageManager.writeDatabase(_otpSecrets, _secret!);
     notifyListeners();
   }
 

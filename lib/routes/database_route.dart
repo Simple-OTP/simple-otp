@@ -136,7 +136,6 @@ class DatabaseRoute extends StatelessWidget {
         List<OTPSecret> secrets =
             OTPSecret.readFromJson(file.readAsStringSync());
         secretList.addAll(secrets);
-        storageManager.writeDatabase(secretList.otpSecrets, secretList.secret!);
       } else {
         logger.d('no file selected');
       }

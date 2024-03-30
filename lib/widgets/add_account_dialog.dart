@@ -72,18 +72,7 @@ class AddAccount extends SimpleDialog {
       Provider.of<SecretList>(context, listen: false).add(otpSecret);
       Provider.of<ActiveOTPSecret>(context, listen: false).otpSecret =
           otpSecret;
-      final list = Provider.of<SecretList>(context, listen: false).otpSecrets;
-      final secret = Provider.of<SecretList>(context, listen: false).secret!;
-      storageManager.writeDatabase(list, secret).then((value) {
-        Navigator.pop(context);
-      }).catchError((e) {
-        showDialog<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return ErrorDialog(message: '$e');
-            });
-        return null;
-      });
+      Navigator.pop(context);
     } catch (e) {
       showDialog<void>(
           context: context,

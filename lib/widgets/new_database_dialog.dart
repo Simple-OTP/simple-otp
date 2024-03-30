@@ -75,6 +75,7 @@ class NewDatabase extends SimpleDialog {
           .setSecretFromPassword(password)
           .then((secretKey) {
         // Write the empty database
+        // TODO Modify this so its part of the secret list
         storageManager.writeDatabase([], secretKey).then((value) {
           // Set the empty database into the OTP list
           Provider.of<SecretList>(context, listen: false).override = [];
