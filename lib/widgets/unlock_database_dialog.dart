@@ -51,28 +51,21 @@ class UnlockDatabase extends SimpleDialog {
   void handleUnlockDatabase(BuildContext context) {
     final password = _passwordController.text;
     // Setup the secret key
-    Provider.of<SecretList>(context, listen: false)
-        .setSecretFromPassword(password)
-        .then((secretKey) {
-      // Write the empty database
-      storageManager.readDatabase(secretKey).then((value) {
-        // Set the empty database into the OTP list
-        Provider.of<SecretList>(context, listen: false).override = value;
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DatabaseRoute(),
-            ));
-      }).catchError((e) {
-        showDialog<void>(
-            context: context,
-            barrierDismissible: true, // user must tap button!
-            builder: (BuildContext context) {
-              return ErrorDialog(message: "$e");
-            });
-        return null;
-      });
-    });
+    try {
+      Provider.of<SecretList>(context, listen: false).unlockDatabase(password);
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DatabaseRoute(),
+          ));
+    } catch (e) {
+      showDialog<void>(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return ErrorDialog(message: "$e");
+          });
+    }
   }
 }

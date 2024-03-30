@@ -71,22 +71,13 @@ class NewDatabase extends SimpleDialog {
     } else {
       final password = _passwordController.text;
       // Setup the secret key
-      Provider.of<SecretList>(context, listen: false)
-          .setSecretFromPassword(password)
-          .then((secretKey) {
-        // Write the empty database
-        // TODO Modify this so its part of the secret list
-        storageManager.writeDatabase([], secretKey).then((value) {
-          // Set the empty database into the OTP list
-          Provider.of<SecretList>(context, listen: false).override = [];
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DatabaseRoute(),
-              ));
-        });
-      });
+      Provider.of<SecretList>(context, listen: false).newDatabase(password);
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DatabaseRoute(),
+          ));
     }
   }
 }

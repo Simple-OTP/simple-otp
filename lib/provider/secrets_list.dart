@@ -26,7 +26,7 @@ class SecretList extends ChangeNotifier {
   /// on March 24, 2024
   /// Upped the iterations to 4 for a bit of future proofing. Will need to
   /// eventually store the configuration so we can upgrade later.
-  Future<SecretKey> setSecretFromPassword(String password) async {
+  Future<SecretKey> _setSecretFromPassword(String password) async {
     final algorithm = Argon2id(
       parallelism: 1,
       memory: 12000, // 12 000 x 1kB block = 12 MB
@@ -41,9 +41,17 @@ class SecretList extends ChangeNotifier {
     return _secret!;
   }
 
-  set override(List<OTPSecret> newSecrets) {
-    _otpSecrets = newSecrets;
-    _otpSecrets.sort();
+  void newDatabase(String password) async {
+    _secret = await _setSecretFromPassword(password);
+    _otpSecrets = [];
+    _storageManager.writeDatabase(_otpSecrets, _secret!);
+    notifyListeners();
+  }
+
+  void unlockDatabase(String password) async {
+    _secret = await _setSecretFromPassword(password);
+    final secrets = await _storageManager.readDatabase(_secret!);
+    _otpSecrets = secrets;
     notifyListeners();
   }
 
