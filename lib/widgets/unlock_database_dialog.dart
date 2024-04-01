@@ -52,7 +52,9 @@ class UnlockDatabase extends SimpleDialog {
     final password = _passwordController.text;
     // Setup the secret key
     try {
-      Provider.of<SecretList>(context, listen: false).unlockDatabase(password).then((_) {
+      Provider.of<SecretList>(context, listen: false)
+          .unlockDatabase(password)
+          .then((_) {
         Navigator.pop(context);
         Navigator.push(
             context,

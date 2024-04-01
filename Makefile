@@ -21,7 +21,7 @@ tests:
 
 apps: build/linux/x64/release/bundle/simple_otp
 
-build/linux/x64/release/bundle/simple_otp: 
+build/linux/x64/release/bundle/simple_otp:
 	flutter build linux
 
 clean:
