@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/active_otp_secret_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/active_otp_secret_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/database_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/database_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/otp_route.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/otp_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/otp_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/my_application.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/my_application.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/runner/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/windows/runner/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
