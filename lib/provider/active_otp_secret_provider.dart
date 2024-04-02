@@ -10,4 +10,9 @@ class ActiveOTPSecret extends ChangeNotifier {
     _secret = newSecret;
     notifyListeners();
   }
+
+  void clear() {
+    _secret = null;
+    notifyListeners();
+  }
 }

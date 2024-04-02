@@ -47,7 +47,8 @@ static void my_application_activate(GApplication* application) {
     gtk_window_set_title(window, "simple_otp");
   }
 
-  gtk_window_set_default_size(window, 1280, 720);
+  // Changed the window size for linux. TODO do this with MacOS
+  gtk_window_set_default_size(window, 450, 800);
   gtk_widget_show(GTK_WIDGET(window));
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();

@@ -4,16 +4,15 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/active_otp_secret_provider.dart';
+import 'package:simple_otp/provider/secrets_list.dart';
+import 'package:simple_otp/util/log.dart';
+import 'package:simple_otp/widgets/add_account_dialog.dart';
+import 'package:simple_otp/widgets/error_dialog.dart';
+import 'package:simple_otp/widgets/otp_selection_item.dart';
 import 'package:simple_otp/widgets/otp_widget.dart';
-
-import '../manager/storage_manager.dart';
-import '../provider/secrets_list.dart';
-import '../util/log.dart';
-import '../widgets/add_account_dialog.dart';
-import '../widgets/error_dialog.dart';
-import '../widgets/otp_selection_item.dart';
 
 // This app view holds onto the database.
 // inside is two widgets, once is the database list itself,
@@ -86,18 +85,14 @@ class DatabaseRoute extends StatelessWidget {
             ],
           ),
         ),
-        body: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: DatabaseListView(),
-            ),
-            const Expanded(
-              flex: 3,
-              child: OTPWidget(),
-            ),
-          ],
-        ),
+        body: Consumer<ActiveOTPSecret>(
+            builder: (context, ActiveOTPSecret activeSecret, child) {
+          if (activeSecret.otpSecret == null) {
+            return DatabaseListView();
+          } else {
+            return const OTPWidget();
+          }
+        }),
       ),
     );
   }
