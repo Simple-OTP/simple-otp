@@ -59,6 +59,10 @@ dart run build_runner build
 
 This is done automatically if you use the top-level Makefile.
 
+## CI/CD
+
+https://docs.flutter.dev/deployment/cd
+
 ## Packaging
 
 ### debian

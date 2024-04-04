@@ -24,5 +24,9 @@ apps: build/linux/x64/release/bundle/simple_otp
 build/linux/x64/release/bundle/simple_otp:
 	flutter build linux
 
+build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk:
+	flutter build apk --debug --split-per-abi
+
+
 clean:
 	flutter clean

@@ -14,16 +14,23 @@ jobs:
 
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v4
+
       # Setup java environment
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
-          java-version: '21'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # 'beta', 'dev', 'alpha', default to: 'stable'
+      - run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev cmake clang pkg-config
 
       - name: Getting dependencies
         run: flutter pub get
@@ -35,6 +42,14 @@ jobs:
       # Run widget tests for our flutter project.
       - name: Testing
         run: flutter test
+
+      - name: Linux build
+        run: flutter build linux
+
+      - name: Android debug build
+        run: flutter build apk --debug --split-per-abi
+
+      # flutter build appbundle --release --build-number=$BUILD_NUMBER
 
       # Build apk.
 #      - run: flutter build apk
