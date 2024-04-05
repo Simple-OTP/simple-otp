@@ -10,7 +10,7 @@ your passphrase. (Or use gpg to encrypt the file, still trying to decide.)
 Adding a UI with a count-down timer because that's fun.
 
 ## Status
-![SimpleOTP Build](https://github.com/wolpert/simple_otp/actions/workflows/simple_otp_build.yml/badge.svg)
+![SimpleOTP Build](https://github.com/Simple-OTP/simple-otp/actions/workflows/simple_otp_build.yml/badge.svg)
 
 ## Description
 
