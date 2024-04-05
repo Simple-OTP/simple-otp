@@ -38,7 +38,10 @@ class _OTPWidgetState extends State<OTPWidget> {
         builder: (context, ActiveOTPSecret activeSecret, child) {
       var otpSecret = activeSecret.otpSecret!;
       var otp = OTP.generateTOTPCodeString(
-          otpSecret.secret, DateTime.now().millisecondsSinceEpoch);
+          otpSecret.secret, DateTime.now().millisecondsSinceEpoch,
+        algorithm: Algorithm.SHA1,
+        isGoogle: true,
+      );
       return Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

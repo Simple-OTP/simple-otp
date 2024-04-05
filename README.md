@@ -63,6 +63,25 @@ This is done automatically if you use the top-level Makefile.
 
 https://docs.flutter.dev/deployment/cd
 
+### Linux build : snapcraft
+
+    ```bash
+    sudo snap install snapcraft --classic
+    sudo snap install lxd
+    sudo usermod -a -G lxd $USER
+    sudo lxd init --auto
+    snapcraft init
+    snapcraft
+    ```
+
+### Android build : fastlane
+    
+    ```bash
+    gem install fastlane
+    flutter build appbundle
+    cd android; fastlane init
+    ```
+
 ## Packaging
 
 ### debian
