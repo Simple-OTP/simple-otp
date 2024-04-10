@@ -22,6 +22,11 @@ class NonceManager {
     return File(completePath);
   }
 
+  String generateNonceAsString() {
+    final nonce = generateNonce();
+    return nonceToString(nonce);
+  }
+
   List<int> generateNonce() {
     var random = Random.secure();
     return List<int>.generate(16, (index) => random.nextInt(16));
