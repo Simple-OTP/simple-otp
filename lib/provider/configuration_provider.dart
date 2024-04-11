@@ -9,7 +9,7 @@ import 'package:simple_otp/model/configuration.dart';
 /// The provider for the configuration element.
 class ConfigurationProvider extends ChangeNotifier {
   static const _fileName = "simple_otp.json";
-  static final Mutex _mutex = Mutex();
+  static final Mutex _saveMutex = Mutex();
 
   /// The configuration object, which may not be loaded.
   Configuration? _configuration;
@@ -25,7 +25,8 @@ class ConfigurationProvider extends ChangeNotifier {
   /// Returns the current configuration object. If null, it will load it.
   Future<Configuration> get configuration async {
     if (_configuration == null) {
-      await loadConfiguration();
+      await _loadConfiguration();
+      notifyListeners();
     }
     return _configuration!;
   }
@@ -33,7 +34,7 @@ class ConfigurationProvider extends ChangeNotifier {
   Configuration? get configurationOrNull => _configuration;
 
   /// Loads the configuration if its not already loaded.
-  Future<void> loadConfiguration() async {
+  Future<void> _loadConfiguration() async {
     if (_configuration != null) {
       return;
     }
@@ -47,16 +48,15 @@ class ConfigurationProvider extends ChangeNotifier {
       await _saveConfiguration(configuration);
       _configuration = configuration;
     }
-    notifyListeners();
   }
 
   /// Need to make sure this method isn't called twice at the same time.
   /// Mutex anyone?
   Future<void> _saveConfiguration(Configuration configuration) async {
-    await _mutex.protect(() async {
-      var file = await _localFile;
-      var string = jsonEncode(configuration.toJson());
-      file.writeAsStringSync(string);
+    var file = await _localFile;
+    var string = jsonEncode(configuration.toJson());
+    await _saveMutex.protect(() async {
+      file.writeAsStringSync(string, flush: true);
     });
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cryptography/cryptography.dart';
+import 'package:mutex/mutex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
@@ -11,6 +12,7 @@ import '../util/log.dart';
 
 class StorageManager {
   static const fileName = "tokens.json";
+  static final Mutex _saveMutex = Mutex();
 
   const StorageManager();
 
@@ -86,7 +88,9 @@ class StorageManager {
     final file = await _localFile;
     final jsonString = OTPSecret.writeToJSON(secrets);
     final encrypted = await encrypt(jsonString, secretKey);
-    await file.writeAsBytes(encrypted);
+    await _saveMutex.protect(() async {
+      await file.writeAsBytes(encrypted, flush: true);
+    });
   }
 
   Future<bool> doesDatabaseExist() async {

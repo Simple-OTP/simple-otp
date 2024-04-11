@@ -20,8 +20,6 @@ class SecretList extends ChangeNotifier {
   UnmodifiableListView<OTPSecret> get otpSecrets =>
       UnmodifiableListView(_otpSecrets);
 
-  SecretKey? get secret => _secret;
-
   /// OWASP approved: Argon2id "m=12288 (12 MiB), t=3, p=1" from https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
   /// on March 24, 2024
   /// Upped the iterations to 4 for a bit of future proofing. Will need to
