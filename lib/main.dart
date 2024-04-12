@@ -21,18 +21,22 @@ void main() {
     ));
     return true;
   };
-  runApp(const OTPProviders());
+  Configuration.generate().then((configuration) {
+    runApp(OTPProviders(configuration: configuration));
+  });
 }
 
 class OTPProviders extends StatelessWidget {
   final StorageManager? storageManager;
+  final Configuration configuration;
 
-  const OTPProviders({super.key, this.storageManager});
+  const OTPProviders(
+      {super.key, this.storageManager, required this.configuration});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => Configuration()),
+      ChangeNotifierProvider(create: (context) => configuration),
       ChangeNotifierProvider(create: (context) => SecretList()),
       ChangeNotifierProvider(create: (context) => ActiveOTPSecret()),
     ], child: OTPApp(storageManager: storageManager));
