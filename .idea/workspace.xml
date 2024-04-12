@@ -7,9 +7,8 @@
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/manager/storage_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/manager/storage_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/configuration_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/configuration_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/secrets_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/secrets_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/configuration.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/provider/configuration_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/configuration.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,7 @@
       <workItem from="1711811196968" duration="30000" />
       <workItem from="1711811348869" duration="3765000" />
       <workItem from="1712239243969" duration="1537000" />
-      <workItem from="1712759134618" duration="4697000" />
+      <workItem from="1712759134618" duration="8358000" />
     </task>
     <servers />
   </component>
