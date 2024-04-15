@@ -8,19 +8,6 @@ import '../util/log.dart';
 /// Manages the Nonce for the Argon2id algorithm used to convert the password
 /// to a secret key.
 class NonceManager {
-  static const _fileName = "nonce.cfg";
-
-  Future<String> get _localPath async {
-    final directory = await getApplicationSupportDirectory();
-    return directory.path;
-  }
-
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    final completePath = '$path/$_fileName';
-    logger.d("Storage Path: $completePath");
-    return File(completePath);
-  }
 
   String generateNonceAsString() {
     final nonce = generateNonce();
@@ -44,36 +31,4 @@ class NonceManager {
     return nonce.map((e) => e.toRadixString(16)).join();
   }
 
-  void saveNonce(List<int> nonce) {
-    _localFile.then((file) {
-      final String hex = nonceToString(nonce);
-      file.writeAsString(hex);
-    });
-  }
-
-  Future<List<int>> generateAndSaveNonce() async {
-    logger.d("Generating Nonce");
-    final nonce = generateNonce();
-    saveNonce(nonce);
-    return nonce;
-  }
-
-  Future<List<int>> readNonce() async {
-    logger.d("Reading Nonce");
-    final file = await _localFile;
-    if (!file.existsSync()) {
-      logger.d("File does not exist");
-      return generateAndSaveNonce();
-    }
-    // Read the file
-    String contents;
-    try {
-      contents = await file.readAsString();
-      return nonceFromString(contents);
-    } catch (e) {
-      // If encountering an error, return 0
-      logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw ("Could not read nonce.");
-    }
-  }
 }

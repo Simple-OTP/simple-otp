@@ -10,21 +10,32 @@ import 'package:simple_otp/manager/nonce_manager.dart';
 class Configuration extends ChangeNotifier {
   static const _fileName = "simple_otp.json";
   static final Mutex _saveMutex = Mutex();
+  static Configuration? _instance;
 
   /// Factory method to generate a configuration object. It cannot be a
   /// Dart constructor or dart factory because it is asynchronous.
   static Future<Configuration> generate({NonceManager? nonceManager}) async {
+    if (_instance != null) {
+      return _instance!;
+    }
     nonceManager ??= NonceManager();
     var file = await _localFile;
     if (file.existsSync()) {
       var jsonString = file.readAsStringSync();
-      return Configuration._fromJson(
+      _instance = Configuration._fromJson(
           nonceManager: nonceManager, json: jsonDecode(jsonString));
     } else {
-      var configuration = Configuration._empty(nonceManager: nonceManager);
-      await configuration._saveConfiguration();
-      return configuration;
+      _instance = Configuration._empty(nonceManager: nonceManager);
+      await _instance!._saveConfiguration();
     }
+    return _instance!;
+  }
+
+  static Configuration get instance {
+    if (_instance == null) {
+      throw Exception("Configuration not generated yet.");
+    }
+    return _instance!;
   }
 
   /// How we get the file internally.

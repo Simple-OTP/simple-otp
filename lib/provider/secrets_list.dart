@@ -2,20 +2,18 @@ import 'dart:collection';
 
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_otp/manager/nonce_manager.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
+import 'package:simple_otp/provider/configuration.dart';
 
 /// When there are no secrets, the database is locked
 class SecretList extends ChangeNotifier {
-  final NonceManager _nonceManager;
   final StorageManager _storageManager;
   SecretKey? _secret;
   List<OTPSecret> _otpSecrets = [];
 
-  SecretList({NonceManager? nonceManager, StorageManager? storageManager})
-      : _nonceManager = nonceManager ?? NonceManager(),
-        _storageManager = storageManager ?? const StorageManager();
+  SecretList({StorageManager? storageManager})
+      : _storageManager = storageManager ?? const StorageManager();
 
   UnmodifiableListView<OTPSecret> get otpSecrets =>
       UnmodifiableListView(_otpSecrets);
@@ -31,10 +29,9 @@ class SecretList extends ChangeNotifier {
       iterations: 4,
       hashLength: 32,
     );
-    final nonce = await _nonceManager.readNonce();
     _secret = await algorithm.deriveKeyFromPassword(
       password: password,
-      nonce: nonce,
+      nonce: Configuration.instance.nonce(),
     );
     return _secret!;
   }
