@@ -1,14 +1,8 @@
-import 'dart:io';
 import 'dart:math';
-
-import 'package:path_provider/path_provider.dart';
-
-import '../util/log.dart';
 
 /// Manages the Nonce for the Argon2id algorithm used to convert the password
 /// to a secret key.
 class NonceManager {
-
   String generateNonceAsString() {
     final nonce = generateNonce();
     return nonceToString(nonce);
@@ -30,5 +24,4 @@ class NonceManager {
   String nonceToString(List<int> nonce) {
     return nonce.map((e) => e.toRadixString(16)).join();
   }
-
 }
