@@ -29,11 +29,10 @@ class SecretList extends ChangeNotifier {
       iterations: 4,
       hashLength: 32,
     );
-    _secret = await algorithm.deriveKeyFromPassword(
+    return await algorithm.deriveKeyFromPassword(
       password: password,
       nonce: Configuration.instance.nonce(),
     );
-    return _secret!;
   }
 
   void newDatabase(String password) async {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mutex/mutex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
+import 'package:simple_otp/util/log.dart';
 
 /// The provider for the configuration element.
 class Configuration extends ChangeNotifier {
@@ -16,15 +17,18 @@ class Configuration extends ChangeNotifier {
   /// Dart constructor or dart factory because it is asynchronous.
   static Future<Configuration> generate({NonceManager? nonceManager}) async {
     if (_instance != null) {
+      logger.d("Returning existing instance");
       return _instance!;
     }
     nonceManager ??= NonceManager();
     var file = await _localFile;
     if (file.existsSync()) {
+      logger.d("Reading configuration from file");
       var jsonString = file.readAsStringSync();
       _instance = Configuration._fromJson(
           nonceManager: nonceManager, json: jsonDecode(jsonString));
     } else {
+      logger.d("Creating new configuration");
       _instance = Configuration._empty(nonceManager: nonceManager);
       await _instance!._saveConfiguration();
     }
@@ -33,6 +37,7 @@ class Configuration extends ChangeNotifier {
 
   static Configuration get instance {
     if (_instance == null) {
+      logger.e("Configuration not generated yet.");
       throw Exception("Configuration not generated yet.");
     }
     return _instance!;

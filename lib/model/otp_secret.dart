@@ -11,13 +11,11 @@ class OTPSecret implements Comparable<OTPSecret> {
       {required this.issuer, required this.username, required this.secret});
 
   /// List of secrets to json
-  /// TODO: Move this into a converter
   static String writeToJSON(List<OTPSecret> secrets) {
     return jsonEncode({"codes": secrets});
   }
 
   /// List of secrets from json
-  /// TODO: Move this into a converter
   static List<OTPSecret> readFromJson(String jsonString) {
     try {
       final jsonDecoded = jsonDecode(jsonString) as Map<String, dynamic>;

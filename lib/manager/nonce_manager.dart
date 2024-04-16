@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:simple_otp/util/log.dart';
+
 /// Manages the Nonce for the Argon2id algorithm used to convert the password
 /// to a secret key.
 class NonceManager {
@@ -9,6 +11,7 @@ class NonceManager {
   }
 
   List<int> generateNonce() {
+    logger.d("Generating nonce");
     var random = Random.secure();
     return List<int>.generate(16, (index) => random.nextInt(16));
   }
