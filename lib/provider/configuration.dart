@@ -79,11 +79,16 @@ class Configuration extends ChangeNotifier {
 
   bool get requirePassword => _requirePassword;
 
-  void setRequirePassword(bool value) {
+  set requirePassword(bool value) {
     _requirePassword = value;
     _saveConfiguration();
     notifyListeners();
   }
+
+  void toggleRequirePassword() {
+    requirePassword = !_requirePassword;
+  }
+
 
   /// Need to make sure this method isn't called twice at the same time.
   /// Mutex anyone?
