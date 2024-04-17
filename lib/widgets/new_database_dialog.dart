@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_otp/manager/password_manager.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
+import 'package:simple_otp/provider/configuration.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
+import 'package:simple_otp/routes/database_route.dart';
 
-import '../routes/database_route.dart';
 import 'error_dialog.dart';
 
 class NewDatabase extends SimpleDialog {
@@ -70,7 +70,7 @@ class NewDatabase extends SimpleDialog {
       final password = _passwordController.text;
       // Setup the secret key
       final secretList = Provider.of<SecretList>(context, listen: false);
-      passwordManager.generateFromPassword(password).then((secretKey) {
+      configuration.generateFromPassword(password).then((secretKey) {
         secretList.newDatabase(StorageManager(secretKey));
         Navigator.pop(context);
         Navigator.push(

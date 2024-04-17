@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/manager/password_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/manager/storage_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/manager/storage_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/manager/password_manager.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/provider/configuration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/configuration.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/provider/secrets_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/secrets_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/database_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/database_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/lock_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/lock_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/add_account_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/add_account_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/delete_otp_secret_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/delete_otp_secret_dialog.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/new_database_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/new_database_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/unlock_database_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/unlock_database_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/storage_manager_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/storage_manager_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.mocks.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.mocks.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +104,7 @@
       <workItem from="1711811348869" duration="3765000" />
       <workItem from="1712239243969" duration="1537000" />
       <workItem from="1712759134618" duration="13939000" />
-      <workItem from="1713114610837" duration="8973000" />
+      <workItem from="1713114610837" duration="9281000" />
     </task>
     <servers />
   </component>

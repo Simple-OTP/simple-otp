@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
 import 'package:mutex/mutex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
 import 'package:simple_otp/util/log.dart';
+
+// universal singleton
+Configuration get configuration => Configuration.instance;
 
 /// The provider for the configuration element.
 class Configuration extends ChangeNotifier {
@@ -87,6 +91,25 @@ class Configuration extends ChangeNotifier {
 
   void toggleRequirePassword() {
     requirePassword = !_requirePassword;
+  }
+
+  /// OWASP approved: Argon2id "m=12288 (12 MiB), t=3, p=1" from https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+  /// on March 24, 2024
+  /// Upped the iterations to 4 for a bit of future proofing. Will need to
+  /// eventually store the configuration so we can upgrade later.
+  ///
+  /// Moved to configuration so to future proof it when its changeable.
+  Future<SecretKey> generateFromPassword(String password) async {
+    final algorithm = Argon2id(
+      parallelism: 1,
+      memory: 12000, // 12 000 x 1kB block = 12 MB
+      iterations: 4,
+      hashLength: 32,
+    );
+    return await algorithm.deriveKeyFromPassword(
+      password: password,
+      nonce: nonce(),
+    );
   }
 
   /// Need to make sure this method isn't called twice at the same time.
