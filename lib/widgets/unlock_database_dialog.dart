@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/manager/password_manager.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
@@ -7,10 +8,7 @@ import '../routes/database_route.dart';
 import 'error_dialog.dart';
 
 class UnlockDatabase extends SimpleDialog {
-  final StorageManager storageManager;
-
-  UnlockDatabase({super.key, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
+  UnlockDatabase({super.key});
 
   final TextEditingController _passwordController = TextEditingController();
 
@@ -50,24 +48,25 @@ class UnlockDatabase extends SimpleDialog {
 
   void handleUnlockDatabase(BuildContext context) {
     final password = _passwordController.text;
+    final secretList = Provider.of<SecretList>(context, listen: false);
     // Setup the secret key
     try {
-      Provider.of<SecretList>(context, listen: false)
-          .unlockDatabase(password)
-          .then((_) {
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DatabaseRoute(),
-            ));
-      }).catchError((e) {
-        showDialog<void>(
-            context: context,
-            barrierDismissible: true, // user must tap button!
-            builder: (BuildContext context) {
-              return ErrorDialog(message: "$e");
-            });
+      passwordManager.generateFromPassword(password).then((secretKey) {
+        secretList.unlockDatabase(StorageManager(secretKey)).then((_) {
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DatabaseRoute(),
+              ));
+        }).catchError((e) {
+          showDialog<void>(
+              context: context,
+              barrierDismissible: true, // user must tap button!
+              builder: (BuildContext context) {
+                return ErrorDialog(message: "$e");
+              });
+        });
       });
     } catch (e) {
       showDialog<void>(

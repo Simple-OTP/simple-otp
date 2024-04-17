@@ -89,7 +89,6 @@ class Configuration extends ChangeNotifier {
     requirePassword = !_requirePassword;
   }
 
-
   /// Need to make sure this method isn't called twice at the same time.
   /// Mutex anyone?
   Future<void> _saveConfiguration() async {

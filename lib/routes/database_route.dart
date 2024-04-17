@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/active_otp_secret_provider.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
@@ -19,10 +18,9 @@ import 'package:simple_otp/widgets/otp_widget.dart';
 // and the other is the code generation view to the right for the selected
 // entry.
 class DatabaseRoute extends StatelessWidget {
-  const DatabaseRoute({super.key, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
-
-  final StorageManager storageManager;
+  const DatabaseRoute({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

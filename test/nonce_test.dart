@@ -8,6 +8,7 @@ void main() {
     final List<int> nonce = mgr.generateNonce();
     final String nonceStr = mgr.nonceToString(nonce);
     final List<int> nonce2 = mgr.nonceFromString(nonceStr);
-    expect(nonce2, equals(nonce), reason: "Nonce conversion failed: $nonceStr $nonce != $nonce2");
+    expect(nonce2, equals(nonce),
+        reason: "Nonce conversion failed: $nonceStr $nonce != $nonce2");
   });
 }

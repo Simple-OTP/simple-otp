@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/manager/password_manager.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
@@ -7,10 +8,7 @@ import '../routes/database_route.dart';
 import 'error_dialog.dart';
 
 class NewDatabase extends SimpleDialog {
-  final StorageManager storageManager;
-
-  NewDatabase({super.key, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
+  NewDatabase({super.key});
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _reenterPasswordController =
@@ -71,13 +69,16 @@ class NewDatabase extends SimpleDialog {
     } else {
       final password = _passwordController.text;
       // Setup the secret key
-      Provider.of<SecretList>(context, listen: false).newDatabase(password);
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const DatabaseRoute(),
-          ));
+      final secretList = Provider.of<SecretList>(context, listen: false);
+      passwordManager.generateFromPassword(password).then((secretKey) {
+        secretList.newDatabase(StorageManager(secretKey));
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DatabaseRoute(),
+            ));
+      });
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
 import '../provider/active_otp_secret_provider.dart';
@@ -9,10 +8,8 @@ import '../provider/secrets_list.dart';
 import 'error_dialog.dart';
 
 class AddAccount extends SimpleDialog {
-  AddAccount({super.key, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
+  AddAccount({super.key});
 
-  final StorageManager storageManager;
   final TextEditingController _issuerController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _secretController = TextEditingController();

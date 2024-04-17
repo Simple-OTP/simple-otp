@@ -4,11 +4,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
-import 'dart:typed_data' as _i6;
+import 'dart:typed_data' as _i5;
 
-import 'package:cryptography/cryptography.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i6;
 import 'package:simple_otp/manager/storage_manager.dart' as _i2;
 import 'package:simple_otp/model/otp_secret.dart' as _i4;
 
@@ -34,79 +33,46 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
   }
 
   @override
-  _i3.Future<List<_i4.OTPSecret>> readDatabase(_i5.SecretKey? secretKey) =>
-      (super.noSuchMethod(
+  _i3.Future<List<_i4.OTPSecret>> readDatabase() => (super.noSuchMethod(
         Invocation.method(
           #readDatabase,
-          [secretKey],
+          [],
         ),
         returnValue: _i3.Future<List<_i4.OTPSecret>>.value(<_i4.OTPSecret>[]),
       ) as _i3.Future<List<_i4.OTPSecret>>);
 
   @override
-  _i3.Future<_i6.Uint8List> encrypt(
-    String? jsonString,
-    _i5.SecretKey? secretKey,
-  ) =>
-      (super.noSuchMethod(
+  _i3.Future<_i5.Uint8List> encrypt(String? jsonString) => (super.noSuchMethod(
         Invocation.method(
           #encrypt,
-          [
-            jsonString,
-            secretKey,
-          ],
+          [jsonString],
         ),
-        returnValue: _i3.Future<_i6.Uint8List>.value(_i6.Uint8List(0)),
-      ) as _i3.Future<_i6.Uint8List>);
+        returnValue: _i3.Future<_i5.Uint8List>.value(_i5.Uint8List(0)),
+      ) as _i3.Future<_i5.Uint8List>);
 
   @override
-  _i3.Future<String> decrypt(
-    _i6.Uint8List? data,
-    _i5.SecretKey? secretKey,
-  ) =>
-      (super.noSuchMethod(
+  _i3.Future<String> decrypt(_i5.Uint8List? data) => (super.noSuchMethod(
         Invocation.method(
           #decrypt,
-          [
-            data,
-            secretKey,
-          ],
+          [data],
         ),
-        returnValue: _i3.Future<String>.value(_i7.dummyValue<String>(
+        returnValue: _i3.Future<String>.value(_i6.dummyValue<String>(
           this,
           Invocation.method(
             #decrypt,
-            [
-              data,
-              secretKey,
-            ],
+            [data],
           ),
         )),
       ) as _i3.Future<String>);
 
   @override
-  _i3.Future<void> writeDatabase(
-    List<_i4.OTPSecret>? secrets,
-    _i5.SecretKey? secretKey,
-  ) =>
+  _i3.Future<void> writeDatabase(List<_i4.OTPSecret>? secrets) =>
       (super.noSuchMethod(
         Invocation.method(
           #writeDatabase,
-          [
-            secrets,
-            secretKey,
-          ],
+          [secrets],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
-
-  @override
-  _i3.Future<bool> doesDatabaseExist() => (super.noSuchMethod(
-        Invocation.method(
-          #doesDatabaseExist,
-          [],
-        ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
 }

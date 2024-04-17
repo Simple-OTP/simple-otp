@@ -6,10 +6,7 @@ import 'package:simple_otp/widgets/new_database_dialog.dart';
 import 'package:simple_otp/widgets/unlock_database_dialog.dart';
 
 class LockRoute extends StatelessWidget {
-  final StorageManager storageManager;
-
-  const LockRoute({super.key, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
+  const LockRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class LockRoute extends StatelessWidget {
         ),
         body: Center(
           child: FutureBuilder<bool>(
-              future: storageManager.doesDatabaseExist(),
+              future: StorageManager.doesDatabaseExist(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return snapshot.data!

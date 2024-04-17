@@ -6,9 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:mockito/annotations.dart';
-
 import 'package:simple_otp/manager/storage_manager.dart';
-
 
 @GenerateMocks([StorageManager])
 void main() {

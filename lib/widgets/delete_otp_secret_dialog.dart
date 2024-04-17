@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
 
 import '../provider/active_otp_secret_provider.dart';
 
 class DeleteOTPSecret extends SimpleDialog {
-  const DeleteOTPSecret(
-      {super.key, required this.otpSecret, StorageManager? storageManager})
-      : storageManager = storageManager ?? const StorageManager();
+  const DeleteOTPSecret({super.key, required this.otpSecret});
 
-  final StorageManager storageManager;
   final OTPSecret otpSecret;
 
   @override

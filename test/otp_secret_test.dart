@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
 void main() {
-
   testWidgets("Test OTPSecret list to/from json", (WidgetTester tester) async {
     // Test the toString method of the Nonce class
     final List<OTPSecret> list = [
@@ -13,5 +12,4 @@ void main() {
     final newList = OTPSecret.readFromJson(jsonString);
     expect(newList, list);
   });
-
 }
