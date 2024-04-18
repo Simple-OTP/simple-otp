@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/simple_otp_build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/simple_otp_build.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/manager/crypt_manager.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/crypt_manager_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +57,7 @@
     "git-widget-placeholder": "main",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/wolpert/projects/organization/simple-otp/Simple-OTP",
+    "last_opened_file_path": "/home/wolpert/projects/organization/simple-otp/Simple-OTP/test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,14 +72,25 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test" />
       <recent name="$PROJECT_DIR$/lib/routes" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Flutter Test.tests in crypt_manager_test.dart">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
       <method v="2" />
     </configuration>
+    <configuration name="tests in crypt_manager_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/test/crypt_manager_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flutter Test.tests in crypt_manager_test.dart" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -104,7 +115,7 @@
       <workItem from="1711811348869" duration="3765000" />
       <workItem from="1712239243969" duration="1537000" />
       <workItem from="1712759134618" duration="13939000" />
-      <workItem from="1713114610837" duration="11333000" />
+      <workItem from="1713114610837" duration="13507000" />
     </task>
     <servers />
   </component>
