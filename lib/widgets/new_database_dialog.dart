@@ -17,55 +17,87 @@ class NewDatabase extends SimpleDialog {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: const Text('Add Account'),
-      children: <Widget>[
-        TextField(
-          obscureText: true,
-          enableSuggestions: false,
-          autocorrect: false,
-          controller: _passwordController,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Enter Password',
+    return Consumer<Configuration>(
+        builder: (context, Configuration config, child) {
+      return SimpleDialog(
+        title: const Text('Add Account'),
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              const Spacer(),
+              const Text('Use a local password'),
+              Checkbox(
+                  value: config.requirePassword,
+                  onChanged: (_) => config.toggleRequirePassword()),
+              const Spacer(),
+            ],
           ),
-        ),
-        TextField(
-          obscureText: true,
-          enableSuggestions: false,
-          autocorrect: false,
-          controller: _reenterPasswordController,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Re-enter Password',
+          TextField(
+            enabled: config.requirePassword,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            controller: _passwordController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Enter Password',
+            ),
           ),
-        ),
-        Row(
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
+          TextField(
+            enabled: config.requirePassword,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            controller: _reenterPasswordController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Re-enter Password',
             ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () => handleNewDatabase(context),
-              child: const Text('Create'),
-            ),
-          ],
-        ),
-      ],
-    );
+          ),
+          Row(
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () => handleNewDatabase(context),
+                child: const Text('Create'),
+              ),
+            ],
+          ),
+        ],
+      );
+    });
   }
 
   void handleNewDatabase(BuildContext context) {
-    if (_passwordController.text != _reenterPasswordController.text) {
+    final configuration = Provider.of<Configuration>(context, listen: false);
+    if (!configuration.requirePassword) {
+      final secretList = Provider.of<SecretList>(context, listen: false);
+      secretList.newDatabase(StorageManager(ByteManager.plain()));
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DatabaseRoute(),
+          ));
+    } else if (_passwordController.text != _reenterPasswordController.text) {
       showDialog<void>(
           context: context,
           barrierDismissible: true, // user must tap button!
           builder: (BuildContext context) {
             return const ErrorDialog(message: 'Passwords do not match');
+          });
+    } else if (_passwordController.text.isEmpty) {
+      showDialog<void>(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return const ErrorDialog(message: 'Password cannot be empty');
           });
     } else {
       final password = _passwordController.text;

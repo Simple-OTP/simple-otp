@@ -4,10 +4,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
-import 'dart:typed_data' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
 import 'package:simple_otp/manager/storage_manager.dart' as _i2;
 import 'package:simple_otp/model/otp_secret.dart' as _i4;
 
@@ -40,30 +38,6 @@ class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
         ),
         returnValue: _i3.Future<List<_i4.OTPSecret>>.value(<_i4.OTPSecret>[]),
       ) as _i3.Future<List<_i4.OTPSecret>>);
-
-  @override
-  _i3.Future<_i5.Uint8List> encrypt(String? jsonString) => (super.noSuchMethod(
-        Invocation.method(
-          #encrypt,
-          [jsonString],
-        ),
-        returnValue: _i3.Future<_i5.Uint8List>.value(_i5.Uint8List(0)),
-      ) as _i3.Future<_i5.Uint8List>);
-
-  @override
-  _i3.Future<String> decrypt(_i5.Uint8List? data) => (super.noSuchMethod(
-        Invocation.method(
-          #decrypt,
-          [data],
-        ),
-        returnValue: _i3.Future<String>.value(_i6.dummyValue<String>(
-          this,
-          Invocation.method(
-            #decrypt,
-            [data],
-          ),
-        )),
-      ) as _i3.Future<String>);
 
   @override
   _i3.Future<void> writeDatabase(List<_i4.OTPSecret>? secrets) =>
