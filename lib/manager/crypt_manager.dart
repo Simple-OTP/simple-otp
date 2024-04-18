@@ -8,6 +8,14 @@ abstract class ByteManager {
   Future<Uint8List> toBytes(String data);
 
   Future<String> fromBytes(Uint8List data);
+
+  factory ByteManager.fromKey(SecretKey secretKey) {
+    return CryptManager(secretKey);
+  }
+
+  factory ByteManager.plain() {
+    return PlainManager();
+  }
 }
 
 class CryptManager implements ByteManager {

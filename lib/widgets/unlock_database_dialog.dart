@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/manager/crypt_manager.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/provider/configuration.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
@@ -52,7 +53,8 @@ class UnlockDatabase extends SimpleDialog {
     // Setup the secret key
     try {
       configuration.generateFromPassword(password).then((secretKey) {
-        secretList.unlockDatabase(StorageManager(secretKey)).then((_) {
+        var byteManager = ByteManager.fromKey(secretKey);
+        secretList.unlockDatabase(StorageManager(byteManager)).then((_) {
           Navigator.pop(context);
           Navigator.push(
               context,
