@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
 import 'package:mutex/mutex.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:simple_otp/manager/directory_manager.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
 import 'package:simple_otp/util/log.dart';
 
@@ -19,21 +19,31 @@ class Configuration extends ChangeNotifier {
 
   /// Factory method to generate a configuration object. It cannot be a
   /// Dart constructor or dart factory because it is asynchronous.
-  static Future<Configuration> generate({NonceManager? nonceManager}) async {
+  static Future<Configuration> generate(
+      {NonceManager? nonceManager, DirectoryManager? directoryManager}) async {
     if (_instance != null) {
       logger.d("Returning existing instance");
       return _instance!;
     }
+    // Normal usage we use the defaults.
     nonceManager ??= NonceManager();
-    var file = await _localFile;
+    directoryManager ??= DirectoryManager.standard();
+    var internalDirectoryPath =
+        await directoryManager.getInternalDirectoryPath();
+    // Get the configuration to bootstrap, if it exists, else use the empty one.
+    var file = _localFile(await directoryManager.getInternalDirectoryPath());
     if (file.existsSync()) {
       logger.d("Reading configuration from file");
       var jsonString = file.readAsStringSync();
       _instance = Configuration._fromJson(
-          nonceManager: nonceManager, json: jsonDecode(jsonString));
+          nonceManager: nonceManager,
+          internalDirectoryPath: internalDirectoryPath,
+          json: jsonDecode(jsonString));
     } else {
       logger.d("Creating new configuration");
-      _instance = Configuration._empty(nonceManager: nonceManager);
+      _instance = Configuration._empty(
+          nonceManager: nonceManager,
+          internalDirectoryPath: internalDirectoryPath);
       await _instance!._saveConfiguration();
     }
     return _instance!;
@@ -48,9 +58,7 @@ class Configuration extends ChangeNotifier {
   }
 
   /// How we get the file internally.
-  static Future<File> get _localFile async {
-    final directory = await getApplicationSupportDirectory();
-    final path = directory.path;
+  static File _localFile(String path) {
     final completePath = '$path/$_fileName';
     return File(completePath);
   }
@@ -58,14 +66,17 @@ class Configuration extends ChangeNotifier {
   final NonceManager _nonceManager;
   final String _nonce;
   bool _requirePassword = false;
+  final String internalDirectoryPath;
 
-  Configuration._empty({required NonceManager nonceManager})
+  Configuration._empty(
+      {required NonceManager nonceManager, required this.internalDirectoryPath})
       : _nonceManager = nonceManager,
         _requirePassword = false,
         _nonce = nonceManager.generateNonceAsString();
 
   Configuration._fromJson({
     required NonceManager nonceManager,
+    required this.internalDirectoryPath,
     required Map<String, dynamic> json,
   })  : _nonceManager = nonceManager,
         _requirePassword = json['requirePassword'] as bool,
@@ -115,7 +126,7 @@ class Configuration extends ChangeNotifier {
   /// Need to make sure this method isn't called twice at the same time.
   /// Mutex anyone?
   Future<void> _saveConfiguration() async {
-    var file = await _localFile;
+    var file = _localFile(internalDirectoryPath);
     var string = _toJson();
     await _saveMutex.protect(() async {
       file.writeAsStringSync(string, flush: true);

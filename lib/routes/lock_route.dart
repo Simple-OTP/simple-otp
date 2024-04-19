@@ -21,18 +21,9 @@ class LockRoute extends StatelessWidget {
           title: const Text('Database Locked'),
         ),
         body: Center(
-          child: FutureBuilder<bool>(
-              future: StorageManager.doesDatabaseExist(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return snapshot.data!
-                      ? _unlockDatabaseWidget(context)
-                      : _newDatabaseWidget(context);
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              }),
-        ),
+            child: StorageManager.doesDatabaseExist()
+                ? _unlockDatabaseWidget(context)
+                : _newDatabaseWidget(context)),
       );
     });
   }

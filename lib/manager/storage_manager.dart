@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:mutex/mutex.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:simple_otp/manager/crypt_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
+import 'package:simple_otp/provider/configuration.dart';
 import 'package:simple_otp/util/log.dart';
 
 class StorageManager {
@@ -16,19 +16,13 @@ class StorageManager {
 
   const StorageManager(this._byteManager);
 
-  static Future<bool> doesDatabaseExist() async {
-    final file = await _localFile;
-    return file.exists();
+  static bool doesDatabaseExist() {
+    final file = _localFile;
+    return file.existsSync();
   }
 
-  static Future<String> get _localPath async {
-    final directory = await getApplicationSupportDirectory();
-
-    return directory.path;
-  }
-
-  static Future<File> get _localFile async {
-    final path = await _localPath;
+  static File get _localFile {
+    final path = configuration.internalDirectoryPath;
     final completePath = '$path/$fileName';
     logger.d("Storage Path: $completePath");
     return File(completePath);
@@ -36,7 +30,7 @@ class StorageManager {
 
   Future<List<OTPSecret>> readDatabase() async {
     logger.d("Reading Database");
-    final file = await _localFile;
+    final file = _localFile;
     if (!file.existsSync()) {
       logger.d("File does not exist");
       return [];
@@ -55,7 +49,7 @@ class StorageManager {
 
   Future<void> writeDatabase(List<OTPSecret> secrets) async {
     logger.d("Writing Database");
-    final file = await _localFile;
+    final file = _localFile;
     final jsonString = OTPSecret.writeToJSON(secrets);
     final encrypted = await _byteManager.toBytes(jsonString);
     await _saveMutex.protect(() async {

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_otp/manager/directory_manager.dart';
 import 'package:simple_otp/provider/active_otp_secret_provider.dart';
 import 'package:simple_otp/provider/configuration.dart';
 import 'package:simple_otp/provider/secrets_list.dart';
@@ -26,8 +27,13 @@ void main() {
 
 class OTPProviders extends StatelessWidget {
   final Configuration configuration;
+  final DirectoryManager _directoryManager;
 
-  const OTPProviders({super.key, required this.configuration});
+  OTPProviders(
+      {super.key,
+      required this.configuration,
+      DirectoryManager? directoryManager})
+      : _directoryManager = directoryManager ?? DirectoryManager.standard();
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +41,14 @@ class OTPProviders extends StatelessWidget {
       ChangeNotifierProvider(create: (context) => configuration),
       ChangeNotifierProvider(create: (context) => SecretList()),
       ChangeNotifierProvider(create: (context) => ActiveOTPSecret()),
-    ], child: const OTPApp());
+    ], child: OTPApp(directoryManager: _directoryManager));
   }
 }
 
 class OTPApp extends StatelessWidget {
-  const OTPApp({super.key});
+  final DirectoryManager directoryManager;
+
+  const OTPApp({super.key, required this.directoryManager});
 
   // This widget is the root of your application.
   @override
