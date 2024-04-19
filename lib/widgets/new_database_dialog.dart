@@ -20,7 +20,7 @@ class NewDatabase extends SimpleDialog {
     return Consumer<Configuration>(
         builder: (context, Configuration config, child) {
       return SimpleDialog(
-        title: const Text('Add Account'),
+        title: const Text('Create Database'),
         children: <Widget>[
           Row(
             children: <Widget>[

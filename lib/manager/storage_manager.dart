@@ -48,12 +48,13 @@ class StorageManager {
   }
 
   Future<void> writeDatabase(List<OTPSecret> secrets) async {
-    logger.d("Writing Database");
+    logger.d("Writing Database start");
     final file = _localFile;
     final jsonString = OTPSecret.writeToJSON(secrets);
     final encrypted = await _byteManager.toBytes(jsonString);
     await _saveMutex.protect(() async {
-      await file.writeAsBytes(encrypted, flush: true);
+      file.writeAsBytesSync(encrypted, flush: true);
     });
+    logger.d("Writing Database end");
   }
 }

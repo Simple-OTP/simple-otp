@@ -3,11 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i6;
 
+import 'package:cryptography/cryptography.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:simple_otp/manager/storage_manager.dart' as _i2;
-import 'package:simple_otp/model/otp_secret.dart' as _i4;
+import 'package:mockito/src/dummies.dart' as _i4;
+import 'package:simple_otp/provider/configuration.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -22,31 +24,121 @@ import 'package:simple_otp/model/otp_secret.dart' as _i4;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [StorageManager].
+class _FakeSecretKey_0 extends _i1.SmartFake implements _i2.SecretKey {
+  _FakeSecretKey_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [Configuration].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStorageManager extends _i1.Mock implements _i2.StorageManager {
-  MockStorageManager() {
+class MockConfiguration extends _i1.Mock implements _i3.Configuration {
+  MockConfiguration() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.OTPSecret>> readDatabase() => (super.noSuchMethod(
-        Invocation.method(
-          #readDatabase,
-          [],
+  String get internalDirectoryPath => (super.noSuchMethod(
+        Invocation.getter(#internalDirectoryPath),
+        returnValue: _i4.dummyValue<String>(
+          this,
+          Invocation.getter(#internalDirectoryPath),
         ),
-        returnValue: _i3.Future<List<_i4.OTPSecret>>.value(<_i4.OTPSecret>[]),
-      ) as _i3.Future<List<_i4.OTPSecret>>);
+      ) as String);
 
   @override
-  _i3.Future<void> writeDatabase(List<_i4.OTPSecret>? secrets) =>
+  bool get requirePassword => (super.noSuchMethod(
+        Invocation.getter(#requirePassword),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  set requirePassword(bool? value) => super.noSuchMethod(
+        Invocation.setter(
+          #requirePassword,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  List<int> nonce() => (super.noSuchMethod(
+        Invocation.method(
+          #nonce,
+          [],
+        ),
+        returnValue: <int>[],
+      ) as List<int>);
+
+  @override
+  void toggleRequirePassword() => super.noSuchMethod(
+        Invocation.method(
+          #toggleRequirePassword,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i5.Future<_i2.SecretKey> generateFromPassword(String? password) =>
       (super.noSuchMethod(
         Invocation.method(
-          #writeDatabase,
-          [secrets],
+          #generateFromPassword,
+          [password],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i5.Future<_i2.SecretKey>.value(_FakeSecretKey_0(
+          this,
+          Invocation.method(
+            #generateFromPassword,
+            [password],
+          ),
+        )),
+      ) as _i5.Future<_i2.SecretKey>);
+
+  @override
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

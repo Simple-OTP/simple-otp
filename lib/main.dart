@@ -20,8 +20,8 @@ void main() {
     ));
     return true;
   };
-  Configuration.generate().then((configuration) {
-    runApp(OTPProviders(configuration: configuration));
+  DirectoryManager.standard().getInternalDirectoryPath().then((path) {
+    runApp(OTPProviders(configuration: Configuration(path)));
   });
 }
 

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/material.dart';
 import 'package:mutex/mutex.dart';
-import 'package:simple_otp/manager/directory_manager.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
 import 'package:simple_otp/util/log.dart';
 
@@ -19,19 +18,15 @@ class Configuration extends ChangeNotifier {
 
   /// Factory method to generate a configuration object. It cannot be a
   /// Dart constructor or dart factory because it is asynchronous.
-  static Future<Configuration> generate(
-      {NonceManager? nonceManager, DirectoryManager? directoryManager}) async {
+  factory Configuration(String internalDirectoryPath) {
     if (_instance != null) {
       logger.d("Returning existing instance");
       return _instance!;
     }
     // Normal usage we use the defaults.
-    nonceManager ??= NonceManager();
-    directoryManager ??= DirectoryManager.standard();
-    var internalDirectoryPath =
-        await directoryManager.getInternalDirectoryPath();
+    NonceManager nonceManager = NonceManager();
     // Get the configuration to bootstrap, if it exists, else use the empty one.
-    var file = _localFile(await directoryManager.getInternalDirectoryPath());
+    var file = _localFile(internalDirectoryPath);
     if (file.existsSync()) {
       logger.d("Reading configuration from file");
       var jsonString = file.readAsStringSync();
@@ -44,7 +39,7 @@ class Configuration extends ChangeNotifier {
       _instance = Configuration._empty(
           nonceManager: nonceManager,
           internalDirectoryPath: internalDirectoryPath);
-      await _instance!._saveConfiguration();
+      _instance!._saveConfiguration();
     }
     return _instance!;
   }
@@ -65,8 +60,8 @@ class Configuration extends ChangeNotifier {
 
   final NonceManager _nonceManager;
   final String _nonce;
-  bool _requirePassword = false;
   final String internalDirectoryPath;
+  bool _requirePassword = false;
 
   Configuration._empty(
       {required NonceManager nonceManager, required this.internalDirectoryPath})
