@@ -92,7 +92,7 @@ void main() {
     await tester.pump();
     expect(tester.widget<TextField>(textFields.at(0)).enabled, true);
     expect(tester.widget<TextField>(textFields.at(1)).enabled, true);
-    
+
     await tester.enterText(textFields.at(0), 'password');
     await tester.enterText(textFields.at(1), 'password');
     await tester.pump();
@@ -107,5 +107,46 @@ void main() {
     // File file = File('$testPath/tokens.json');
     // expect(file.existsSync(), true);
     // expect(file.readAsStringSync(), isNot(equals('{"codes":[]}')));
+  });
+
+  testWidgets('Mismatching passwords', (WidgetTester tester) async {
+    final testPath = generate();
+    final Configuration configuration = Configuration(testPath);
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(OTPProviders(configuration: configuration));
+    await tester.pump(); // handle the builder
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump(); // handle the route push
+    var textFields = find.byType(TextField);
+    await tester.tap(find.byType(Checkbox));
+    await tester.pump();
+
+    await tester.enterText(textFields.at(0), 'password1');
+    await tester.enterText(textFields.at(1), 'password2');
+    await tester.pump();
+
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+    expect(find.text('Passwords do not match'), findsOne);
+    expect(find.text('Password cannot be empty'), findsNothing);
+  });
+
+  testWidgets('no passwords', (WidgetTester tester) async {
+    final testPath = generate();
+    final Configuration configuration = Configuration(testPath);
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(OTPProviders(configuration: configuration));
+    await tester.pump(); // handle the builder
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump(); // handle the route push
+    await tester.tap(find.byType(Checkbox));
+    await tester.pump();
+
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+    expect(find.text('Passwords do not match'), findsNothing);
+    expect(find.text('Password cannot be empty'), findsOne);
   });
 }
