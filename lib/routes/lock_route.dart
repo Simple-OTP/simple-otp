@@ -15,13 +15,14 @@ class LockRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<SecretList>(builder: (context, secretList, child) {
+      final configuration = Provider.of<Configuration>(context, listen: false);
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('Database Locked'),
         ),
         body: Center(
-            child: StorageManager.doesDatabaseExist()
+            child: configuration.doesDatabaseExist()
                 ? _unlockDatabaseWidget(context)
                 : _newDatabaseWidget(context)),
       );
@@ -41,6 +42,7 @@ class LockRoute extends StatelessWidget {
   }
 
   Widget _unlockDatabaseWidget(BuildContext context) {
+    final configuration = Provider.of<Configuration>(context, listen: false);
     return ElevatedButton(
       child: const Text('Unlock Database'),
       onPressed: () => configuration.requirePassword
@@ -51,10 +53,14 @@ class LockRoute extends StatelessWidget {
 
   void _handleUnlockedPlainDatabase(BuildContext context) {
     final secretList = Provider.of<SecretList>(context, listen: false);
+    final configuration = Provider.of<Configuration>(context, listen: false);
     // Setup the secret key
     try {
       var byteManager = ByteManager.plain();
-      secretList.unlockDatabase(StorageManager(byteManager)).then((_) {
+      secretList
+          .unlockDatabase(
+              StorageManager(byteManager, configuration.getDatabaseFile()))
+          .then((_) {
         Navigator.pop(context);
         Navigator.push(
             context,

@@ -50,11 +50,15 @@ class UnlockDatabase extends SimpleDialog {
   void handleUnlockDatabase(BuildContext context) {
     final password = _passwordController.text;
     final secretList = Provider.of<SecretList>(context, listen: false);
+    final configuration = Provider.of<Configuration>(context, listen: false);
     // Setup the secret key
     try {
       configuration.generateFromPassword(password).then((secretKey) {
         var byteManager = ByteManager.fromKey(secretKey);
-        secretList.unlockDatabase(StorageManager(byteManager)).then((_) {
+        secretList
+            .unlockDatabase(
+                StorageManager(byteManager, configuration.getDatabaseFile()))
+            .then((_) {
           Navigator.pop(context);
           Navigator.push(
               context,

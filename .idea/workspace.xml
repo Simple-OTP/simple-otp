@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="288537fe-a2ed-4f55-96e9-9200e9454472" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/manager/storage_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/manager/storage_manager.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/provider/configuration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/provider/configuration.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes/lock_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/lock_route.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/new_database_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/new_database_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/unlock_database_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/unlock_database_dialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/app_launch_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/widget_test.mocks.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.mocks.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +52,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Flutter Test.tests in app_launch_test.dart.executor": "Run",
     "Flutter Test.tests in crypt_manager_test.dart.executor": "Run",
     "Flutter Test.tests in widget_test.dart.executor": "Run",
     "Flutter.main.dart.executor": "Run",
@@ -82,9 +84,14 @@
       <recent name="$PROJECT_DIR$/lib/routes" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter Test.tests in widget_test.dart">
+  <component name="RunManager" selected="Flutter Test.tests in app_launch_test.dart">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in app_launch_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/test/app_launch_test.dart" />
+      <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
     <configuration name="tests in crypt_manager_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
@@ -99,6 +106,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Flutter Test.tests in app_launch_test.dart" />
         <item itemvalue="Flutter Test.tests in widget_test.dart" />
         <item itemvalue="Flutter Test.tests in crypt_manager_test.dart" />
       </list>
@@ -128,7 +136,7 @@
       <workItem from="1712239243969" duration="1537000" />
       <workItem from="1712759134618" duration="13939000" />
       <workItem from="1713114610837" duration="22623000" />
-      <workItem from="1713487009365" duration="4086000" />
+      <workItem from="1713487009365" duration="11104000" />
     </task>
     <servers />
   </component>

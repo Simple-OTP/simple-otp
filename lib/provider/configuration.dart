@@ -7,54 +7,51 @@ import 'package:mutex/mutex.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';
 import 'package:simple_otp/util/log.dart';
 
-// universal singleton
-Configuration get configuration => Configuration.instance;
-
 /// The provider for the configuration element.
 class Configuration extends ChangeNotifier {
-  static const _fileName = "simple_otp.json";
+  static const _configFileName = "simple_otp.json";
+  static const _tokensFileName = "tokens.json";
   static final Mutex _saveMutex = Mutex();
-  static Configuration? _instance;
 
   /// Factory method to generate a configuration object. It cannot be a
   /// Dart constructor or dart factory because it is asynchronous.
   factory Configuration(String internalDirectoryPath) {
-    if (_instance != null) {
-      logger.d("Returning existing instance");
-      return _instance!;
-    }
     // Normal usage we use the defaults.
     NonceManager nonceManager = NonceManager();
     // Get the configuration to bootstrap, if it exists, else use the empty one.
     var file = _localFile(internalDirectoryPath);
+    Configuration instance;
     if (file.existsSync()) {
       logger.d("Reading configuration from file");
       var jsonString = file.readAsStringSync();
-      _instance = Configuration._fromJson(
+      instance = Configuration._fromJson(
           nonceManager: nonceManager,
           internalDirectoryPath: internalDirectoryPath,
           json: jsonDecode(jsonString));
     } else {
       logger.d("Creating new configuration");
-      _instance = Configuration._empty(
+      instance = Configuration._empty(
           nonceManager: nonceManager,
           internalDirectoryPath: internalDirectoryPath);
-      _instance!._saveConfiguration();
+      instance._saveConfiguration();
     }
-    return _instance!;
-  }
-
-  static Configuration get instance {
-    if (_instance == null) {
-      logger.e("Configuration not generated yet.");
-      throw Exception("Configuration not generated yet.");
-    }
-    return _instance!;
+    return instance;
   }
 
   /// How we get the file internally.
   static File _localFile(String path) {
-    final completePath = '$path/$_fileName';
+    final completePath = '$path/$_configFileName';
+    return File(completePath);
+  }
+
+  bool doesDatabaseExist() {
+    final file = getDatabaseFile();
+    return file.existsSync();
+  }
+
+  File getDatabaseFile() {
+    final completePath = '$internalDirectoryPath/$_tokensFileName';
+    logger.d("Storage Path: $completePath");
     return File(completePath);
   }
 

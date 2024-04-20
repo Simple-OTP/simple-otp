@@ -78,7 +78,8 @@ class NewDatabase extends SimpleDialog {
     final configuration = Provider.of<Configuration>(context, listen: false);
     if (!configuration.requirePassword) {
       final secretList = Provider.of<SecretList>(context, listen: false);
-      secretList.newDatabase(StorageManager(ByteManager.plain()));
+      secretList.newDatabase(
+          StorageManager(ByteManager.plain(), configuration.getDatabaseFile()));
       Navigator.pop(context);
       Navigator.push(
           context,
@@ -105,7 +106,8 @@ class NewDatabase extends SimpleDialog {
       final secretList = Provider.of<SecretList>(context, listen: false);
       configuration.generateFromPassword(password).then((secretKey) {
         var byteManager = ByteManager.fromKey(secretKey);
-        secretList.newDatabase(StorageManager(byteManager));
+        secretList.newDatabase(
+            StorageManager(byteManager, configuration.getDatabaseFile()));
         Navigator.pop(context);
         Navigator.push(
             context,
