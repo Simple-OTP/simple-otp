@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Simple OTP
+Comment=Authy Replacement
+Exec=simple-otp-app 
+Icon=${SNAP}/meta/gui/simple-otp-app.png # Replace name with your app name.
+Terminal=false
+Type=Application
+Categories=Security; # Adjust accordingly your snap category.
