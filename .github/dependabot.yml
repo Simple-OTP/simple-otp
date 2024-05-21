@@ -9,4 +9,14 @@ updates:
     directory: "/" # Location of package manifests
     open-pull-requests-limit: 5
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "thursday"
+    groups:
+       # Specify a name for the group, which will be used in pull request titles
+       # and branch names
+       dev-dependencies:
+          # Define patterns to include dependencies in the group (based on
+          # dependency name)
+          applies-to: version-updates # Applies the group rule to version updates
+          patterns:
+            - "*"       # Yolo!
