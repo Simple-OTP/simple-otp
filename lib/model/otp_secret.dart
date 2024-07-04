@@ -6,9 +6,14 @@ class OTPSecret implements Comparable<OTPSecret> {
   final String issuer;
   final String username;
   final String secret;
+  num timestamp;
 
   OTPSecret(
-      {required this.issuer, required this.username, required this.secret});
+      {required this.issuer,
+      required this.username,
+      required this.secret,
+      num? timestamp})
+      : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
 
   /// List of secrets to json
   static String writeToJSON(List<OTPSecret> secrets) {
@@ -33,12 +38,16 @@ class OTPSecret implements Comparable<OTPSecret> {
   OTPSecret.fromJson(Map<String, dynamic> json)
       : issuer = json['issuer'] as String,
         username = json['username'] as String,
-        secret = json['secret'] as String;
+        secret = json['secret'] as String,
+        timestamp = json.containsKey('timestamp')
+            ? json['timestamp'] as num
+            : DateTime.now().millisecondsSinceEpoch;
 
   Map<String, dynamic> toJson() => {
         'issuer': issuer,
         'username': username,
         'secret': secret,
+        'timestamp': timestamp,
       };
 
   @override
