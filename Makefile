@@ -19,7 +19,7 @@ lint:
 tests:
 	flutter test
 
-apps: build/linux/x64/release/bundle/simple_otp
+apps: build/linux/x64/release/bundle/simple_otp build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk
 
 build/linux/x64/release/bundle/simple_otp:
 	flutter build linux
