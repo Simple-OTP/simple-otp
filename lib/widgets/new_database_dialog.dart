@@ -105,6 +105,7 @@ class NewDatabase extends SimpleDialog {
       // Setup the secret key
       final secretList = Provider.of<SecretList>(context, listen: false);
       configuration.generateFromPassword(password).then((secretKey) {
+        if (!context.mounted) return; // TODO REMOVE HACK
         var byteManager = ByteManager.fromKey(secretKey);
         secretList.newDatabase(
             StorageManager(byteManager, configuration.getDatabaseFile()));

@@ -59,6 +59,7 @@ class UnlockDatabase extends SimpleDialog {
             .unlockDatabase(
                 StorageManager(byteManager, configuration.getDatabaseFile()))
             .then((_) {
+          if (!context.mounted) return; // TODO REMOVE HACK
           Navigator.pop(context);
           Navigator.push(
               context,
@@ -66,6 +67,7 @@ class UnlockDatabase extends SimpleDialog {
                 builder: (context) => const DatabaseRoute(),
               ));
         }).catchError((e) {
+          if (!context.mounted) return; // TODO REMOVE HACK
           showDialog<void>(
               context: context,
               barrierDismissible: true, // user must tap button!

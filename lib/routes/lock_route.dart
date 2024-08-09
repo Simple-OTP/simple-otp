@@ -61,6 +61,7 @@ class LockRoute extends StatelessWidget {
           .unlockDatabase(
               StorageManager(byteManager, configuration.getDatabaseFile()))
           .then((_) {
+        if (!context.mounted) return; // TODO REMOVE HACK
         Navigator.pop(context);
         Navigator.push(
             context,
@@ -68,6 +69,7 @@ class LockRoute extends StatelessWidget {
               builder: (context) => const DatabaseRoute(),
             ));
       }).catchError((e) {
+        if (!context.mounted) return; // TODO REMOVE HACK
         showDialog<void>(
             context: context,
             barrierDismissible: true, // user must tap button!
