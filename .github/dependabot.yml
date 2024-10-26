@@ -9,8 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     open-pull-requests-limit: 5
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "daily"
     groups:
        # Specify a name for the group, which will be used in pull request titles
        # and branch names
