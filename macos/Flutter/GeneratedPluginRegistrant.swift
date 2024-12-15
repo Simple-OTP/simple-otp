@@ -5,7 +5,7 @@
 import FlutterMacOS
 import Foundation
 
-import cryptography_flutter
+import cryptography_flutter_plus
 import path_provider_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
