@@ -7,7 +7,7 @@ import 'dart:async' as _i6;
 import 'dart:io' as _i2;
 import 'dart:ui' as _i7;
 
-import 'package:cryptography/cryptography.dart' as _i3;
+import 'package:cryptography_plus/cryptography_plus.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:simple_otp/provider/configuration.dart' as _i4;

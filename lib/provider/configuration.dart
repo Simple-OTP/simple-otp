@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cryptography/cryptography.dart';
+import 'package:cryptography_plus/cryptography_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mutex/mutex.dart';
 import 'package:simple_otp/manager/nonce_manager.dart';

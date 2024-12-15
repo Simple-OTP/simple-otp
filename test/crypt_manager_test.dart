@@ -1,4 +1,4 @@
-import 'package:cryptography/cryptography.dart';
+import 'package:cryptography_plus/cryptography_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:simple_otp/manager/crypt_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';

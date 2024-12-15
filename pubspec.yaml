@@ -29,8 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   otp: any
-  cryptography: ^2.7.0
-  cryptography_flutter: ^2.3.2
+  cryptography_plus: ^2.7.0
+  cryptography_flutter_plus: ^2.3.2 
   flutter:
     sdk: flutter
   mutex: ^3.1.0
@@ -42,7 +42,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  file_picker: ^8.1.4
+  file_picker: 8.1.3
   http: ^1.2.1
 
 dev_dependencies:

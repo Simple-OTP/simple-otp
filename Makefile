@@ -7,7 +7,7 @@ all: deps autogen lint tests
 deps:
 	flutter pub get
 	flutter pub outdated
-	flutter pub upgrade --major-versions
+#	flutter pub upgrade --major-versions
 
 autogen:
 	dart run build_runner build -d
