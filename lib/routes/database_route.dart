@@ -97,7 +97,7 @@ class DatabaseRoute extends StatelessWidget {
 
   void doExport(final SecretList secretList) {
     final String json = OTPSecret.writeToJSON(secretList.otpSecrets);
-    FilePicker
+    FilePicker.platform
         .saveFile(
             fileName: 'simple_otp.json',
             allowedExtensions: ['json'],
@@ -117,7 +117,7 @@ class DatabaseRoute extends StatelessWidget {
   void doImport(
       final SecretList secretList, final void Function(Object) onError) async {
     try {
-      FilePickerResult? result = await FilePicker.pickFiles(
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowedExtensions: ['json', 'jsn'],
       );
       if (result != null &&
