@@ -29,8 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   otp: any
-  cryptography_plus: ^2.7.0
-  cryptography_flutter_plus: ^2.3.2 
+  cryptography_plus: ^3.0.0
+  cryptography_flutter_plus: ^3.0.0 
   flutter:
     sdk: flutter
   mutex: ^3.1.0
