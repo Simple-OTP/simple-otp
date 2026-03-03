@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:simple_otp/exceptions.dart';
 import 'package:simple_otp/manager/storage_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 
@@ -29,7 +30,7 @@ class SecretList extends ChangeNotifier {
   }
 
   void addAll(List<OTPSecret> list) {
-    if (_storageManager == null) throw ("Database not initialized");
+    if (_storageManager == null) throw const DatabaseNotInitializedException();
     _otpSecrets.addAll(list);
     _otpSecrets = _otpSecrets.toSet().toList(); // remove dups
     _otpSecrets.sort();
@@ -38,7 +39,7 @@ class SecretList extends ChangeNotifier {
   }
 
   void add(OTPSecret secret) {
-    if (_storageManager == null) throw ("Database not initialized");
+    if (_storageManager == null) throw const DatabaseNotInitializedException();
     if (!_otpSecrets.contains(secret)) {
       _otpSecrets.add(secret);
       _otpSecrets.sort();
@@ -48,7 +49,7 @@ class SecretList extends ChangeNotifier {
   }
 
   void remove(OTPSecret secret) {
-    if (_storageManager == null) throw ("Database not initialized");
+    if (_storageManager == null) throw const DatabaseNotInitializedException();
     _otpSecrets.remove(secret);
     _storageManager!.writeDatabase(_otpSecrets);
     notifyListeners();

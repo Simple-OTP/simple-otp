@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cryptography_plus/cryptography_plus.dart';
+import 'package:simple_otp/exceptions.dart';
 import 'package:simple_otp/util/log.dart';
 
 abstract class ByteManager {
@@ -47,7 +48,7 @@ class CryptManager implements ByteManager {
           macLength: algorithm.macAlgorithm.macLength);
     } catch (e) {
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw ("Database file is corrupted.");
+      throw const DatabaseCorruptedException();
     }
     try {
       final decrypted = await algorithm.decrypt(
@@ -57,7 +58,7 @@ class CryptManager implements ByteManager {
       return utf8.decode(decrypted);
     } catch (e) {
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw ("Bad Password.");
+      throw const BadPasswordException();
     }
   }
 }

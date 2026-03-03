@@ -101,12 +101,9 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 5));
     expect(find.text('Passwords do not match'), findsNothing);
     expect(find.text('Password cannot be empty'), findsNothing);
-
-    // The below doesn't work likely due to the future in the configuration generate password.
-    // expect(find.text('Create'), findsNothing);
-    // File file = File('$testPath/tokens.json');
-    // expect(file.existsSync(), true);
-    // expect(file.readAsStringSync(), isNot(equals('{"codes":[]}')));
+    // Note: verifying the encrypted file is written cannot be done here because
+    // Argon2id key derivation runs outside the widget pump loop and cannot be
+    // driven by pumpAndSettle. That path is covered by storage_manager_test.dart.
   });
 
   testWidgets('Mismatching passwords', (WidgetTester tester) async {

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:mutex/mutex.dart';
+import 'package:simple_otp/exceptions.dart';
 import 'package:simple_otp/manager/crypt_manager.dart';
 import 'package:simple_otp/model/otp_secret.dart';
 import 'package:simple_otp/util/log.dart';
@@ -28,7 +29,7 @@ class StorageManager {
       contents = await _databasePath.readAsBytes();
     } catch (e) {
       logger.e("Error: $e", error: e, stackTrace: StackTrace.current);
-      throw ("Could not read internal database.");
+      throw const DatabaseReadException();
     }
     final decrypted = await _byteManager.fromBytes(contents);
     return OTPSecret.readFromJson(decrypted);
