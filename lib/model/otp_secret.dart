@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:simple_otp/exceptions.dart';
+
 /// The model that represents a OTP Secret.
 class OTPSecret implements Comparable<OTPSecret> {
   final String issuer;
@@ -31,7 +33,7 @@ class OTPSecret implements Comparable<OTPSecret> {
       return list;
     } catch (e) {
       // If encountering an error, return 0
-      throw ("Could not read json");
+      throw const DatabaseParseException();
     }
   }
 
