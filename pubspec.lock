@@ -181,10 +181,10 @@ packages:
     dependency: "direct main"
     description:
       name: cryptography_flutter_plus
-      sha256: "65bc0a78c2104cdb02f4b69e3a03abef093e660d9d9208bc81942b058b49deb2"
+      sha256: d880a6d98b8a1f46cdde6710c219a324cba97fcf8b1883467920ba6fc183fc5d
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.2"
   cryptography_plus:
     dependency: "direct main"
     description:
