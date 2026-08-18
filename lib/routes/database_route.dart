@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -102,12 +101,13 @@ class DatabaseRoute extends StatelessWidget {
             allowedExtensions: ['json'],
             type: FileType.any,
             bytes: utf8.encode(json))
-        .then((value) {
-      // If its not null, and we are not mobile, then we have to write it.
-      if (value != null && !(Platform.isAndroid || Platform.isIOS)) {
-        File file = File(value);
-        file.writeAsStringSync(json);
-        logger.d('File saved: $value');
+        .then((uri) {
+      // Every platform implementation writes the bytes itself, so there is
+      // nothing left to do here but report the destination.
+      if (uri != null) {
+        logger.d('File saved: $uri');
+      } else {
+        logger.d('no file selected');
       }
     });
   }
@@ -116,17 +116,13 @@ class DatabaseRoute extends StatelessWidget {
   void doImport(
       final SecretList secretList, final void Function(Object) onError) async {
     try {
-      FilePickerResult? result = await FilePicker.pickFiles(
+      PlatformFile? result = await FilePicker.pickFile(
         allowedExtensions: ['json', 'jsn'],
       );
-      if (result != null &&
-          result.files.isNotEmpty &&
-          result.files.single.path != null) {
-        String path = result.files.single.path!;
-        logger.d("Loading $path");
-        File file = File(path);
+      if (result != null) {
+        logger.d("Loading ${result.uri}");
         List<OTPSecret> secrets =
-            OTPSecret.readFromJson(file.readAsStringSync());
+            OTPSecret.readFromJson(utf8.decode(await result.readAsBytes()));
         secretList.addAll(secrets);
       } else {
         logger.d('no file selected');
