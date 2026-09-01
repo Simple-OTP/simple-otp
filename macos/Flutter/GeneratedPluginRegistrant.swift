@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import cryptography_flutter_plus
-import file_picker
+import file_picker_darwin
 import path_provider_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
