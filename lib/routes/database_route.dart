@@ -98,8 +98,6 @@ class DatabaseRoute extends StatelessWidget {
     final String json = OTPSecret.writeToJSON(secretList.otpSecrets);
     FilePicker.saveFile(
             fileName: 'simple_otp.json',
-            allowedExtensions: ['json'],
-            type: FileType.any,
             bytes: utf8.encode(json))
         .then((uri) {
       // Every platform implementation writes the bytes itself, so there is
