@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_otp/manager/directory_manager.dart';
 import 'package:simple_otp/provider/active_otp_secret_provider.dart';
