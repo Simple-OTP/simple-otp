@@ -5,9 +5,9 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory.value(rootProject.layout.projectDirectory.dir('../build'))
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.layout.buildDirectory.value(rootProject.layout.buildDirectory.dir(project.name))
 
     if (project.name != 'app') {
         // Apply Kotlin plugin to all plugins if they have Kotlin source files
@@ -25,8 +25,8 @@ subprojects {
                 }
 
                 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-                    kotlinOptions {
-                        jvmTarget = "21"
+                    compilerOptions {
+                        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
                     }
                 }
             }
@@ -38,5 +38,5 @@ subprojects {
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }
